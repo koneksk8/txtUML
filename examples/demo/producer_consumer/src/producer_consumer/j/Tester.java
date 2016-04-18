@@ -31,6 +31,6 @@ public class Tester {
 	}
 
 	public static void main(String[] init) {
-		ModelExecutor.create().run(Tester::init);
+		ModelExecutor.Static.create().run(Tester::init);
 	}
 }

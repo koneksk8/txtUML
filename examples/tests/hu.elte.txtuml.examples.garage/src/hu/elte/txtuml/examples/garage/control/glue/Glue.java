@@ -41,7 +41,7 @@ public class Glue implements ExternalClass, IControl, IControlled {
 	static Glue instance = null;
 
 	private Glue() {
-		ModelExecutor.create().launch(() -> {
+		ModelExecutor.Static.create().launch(() -> {
 			// Initialize links and start object instances
 			Action.link(MotorMovesDoor.movedDoor.class, door, MotorMovesDoor.movingMotor.class, motor);
 			Action.link(DoorSwitchesOnAlarm.SwitchingDoor.class, door, DoorSwitchesOnAlarm.SwitchedAlarm.class, alarm);

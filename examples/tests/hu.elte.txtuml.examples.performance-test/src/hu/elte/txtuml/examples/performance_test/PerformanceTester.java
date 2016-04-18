@@ -7,7 +7,7 @@ import hu.elte.txtuml.examples.performance_test.model.Test;
 public class PerformanceTester {
 
 	public static void main(String[] args) {
-		ModelExecutor executor = ModelExecutor.create().setTraceLogging(true).setDynamicChecks(false);
+		ModelExecutor executor = ModelExecutor.Static.create().setTraceLogging(true).setDynamicChecks(false);
 
 		long start = System.currentTimeMillis();
 

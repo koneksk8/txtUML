@@ -136,6 +136,17 @@ public abstract class Composition extends Association {
 	 */
 	public abstract class Container<T extends ModelClass> extends MaybeEnd<T>
 			implements Multiplicity.ZeroToOne, Navigability.Navigable, ContainmentKind.ContainerEnd {
+
+		@Override
+		public int lowerBound() {
+			return 0;
+		}
+
+		@Override
+		public int upperBound() {
+			return 1;
+		}
+
 	}
 
 	/**
@@ -192,6 +203,17 @@ public abstract class Composition extends Association {
 	 */
 	public abstract class HiddenContainer<T extends ModelClass> extends MaybeEnd<T>
 			implements Multiplicity.ZeroToOne, Navigability.NonNavigable, ContainmentKind.ContainerEnd {
+
+		@Override
+		public int lowerBound() {
+			return 0;
+		}
+
+		@Override
+		public int upperBound() {
+			return 1;
+		}
+
 	}
 
 }

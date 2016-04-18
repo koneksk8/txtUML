@@ -15,7 +15,7 @@ import train.j.model.signals.SwitchLight;
 
 public class Tester {
 	Tester() {
-		ModelExecutor executor = ModelExecutor.create().setTraceLogging(true).launch(this::createInstances);
+		ModelExecutor executor = ModelExecutor.Static.create().setTraceLogging(true).launch(this::createInstances);
 		test();
 		executor.shutdown();
 	}

@@ -32,7 +32,7 @@ public class MicrowaveTester {
 	}
 
 	public static void main(String args) throws InterruptedException {
-		ModelExecutor executor = ModelExecutor.create().setTraceLogging(false).launch(MicrowaveTester::init);
+		ModelExecutor executor = ModelExecutor.Static.create().setTraceLogging(false).launch(MicrowaveTester::init);
 		
 		String inp = "";
 		do {

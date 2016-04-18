@@ -47,7 +47,7 @@ public class PrinterTester {
 	}
 
 	public static void main(String[] args) throws InterruptedException {
-		ModelExecutor executor = ModelExecutor.create().setTraceLogging(false).launch(PrinterTester::init);
+		ModelExecutor executor = ModelExecutor.Static.create().setTraceLogging(false).launch(PrinterTester::init);
 
 		API.send(new WantToPrint(), h1); // 2
 		Thread.sleep(500);

@@ -259,7 +259,7 @@ public abstract class Action {
 	 * @throws NullPointerException
 	 *             if <code>reception</code> is <code>null</code>
 	 */
-	public static <S extends Signal> void send(S signal, final Interface ifc) {
+	public static <S extends Signal> void sendToIfc(S signal, final Interface ifc) {
 		Action.send(signal, new Reception<S>() {
 			@Override
 			public void accept(S signal) {
