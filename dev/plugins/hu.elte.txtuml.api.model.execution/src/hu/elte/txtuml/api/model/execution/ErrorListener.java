@@ -14,37 +14,26 @@ import hu.elte.txtuml.api.model.StateMachine.Vertex;
  */
 public interface ErrorListener {
 
-	default void lowerBoundOfMultiplicityOffended(ModelClass obj, Class<? extends AssociationEnd<?, ?>> assocEnd) {
-	}
+	void lowerBoundOfMultiplicityOffended(ModelClass obj, Class<? extends AssociationEnd<?, ?>> assocEnd);
 
-	default void upperBoundOfMultiplicityOffended(ModelClass obj, Class<? extends AssociationEnd<?, ?>> assocEnd) {
-	}
+	void upperBoundOfMultiplicityOffended(ModelClass obj, Class<? extends AssociationEnd<?, ?>> assocEnd);
 
-	default void linkingDeletedObject(ModelClass obj) {
-	}
+	void linkingDeletedObject(ModelClass obj);
 
-	default void unlinkingDeletedObject(ModelClass obj) {
-	}
+	void unlinkingDeletedObject(ModelClass obj);
 
-	default void startingDeletedObject(ModelClass obj) {
-	}
+	void startingDeletedObject(ModelClass obj);
 
-	default void objectCannotBeDeleted(ModelClass obj) {
-	}
+	void objectCannotBeDeleted(ModelClass obj);
 
-	default void guardsOfTransitionsAreOverlapping(Transition transition1, Transition transition, Vertex vertex) {
-	}
+	void guardsOfTransitionsAreOverlapping(Transition transition1, Transition transition, Vertex vertex);
 
-	default void moreThanOneElseTransitionsFromChoice(Vertex choice) {
-	}
+	void moreThanOneElseTransitionsFromChoice(Vertex choice);
 
-	default void noTransitionFromChoice(Vertex choice) {
-	}
+	void noTransitionFromChoice(Vertex choice);
 
-	default void elseGuardFromNonChoiceVertex(Transition transition) {
-	}
+	void elseGuardFromNonChoiceVertex(Transition transition);
 
-	default void multipleContainerForAnObject(ModelClass obj, Class<? extends AssociationEnd<?, ?>> assocEnd) {
-	}
+	void multipleContainerForAnObject(ModelClass obj, Class<? extends AssociationEnd<?, ?>> assocEnd);
 
 }

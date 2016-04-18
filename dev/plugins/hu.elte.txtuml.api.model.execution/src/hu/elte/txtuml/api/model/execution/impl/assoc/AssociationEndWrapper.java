@@ -15,58 +15,77 @@ public interface AssociationEndWrapper<T extends ModelClass, C extends Collectio
 
 	void remove(T object);
 
-	default boolean checkLowerBound() {
-		return getWrapped().checkLowerBound(getCollection().count());
-	}
+	boolean checkLowerBound();
 
-	default boolean isEmpty() {
-		return getCollection().isEmpty();
-	}
+	boolean isEmpty();
 
 	// create methods
 
-	static <T extends ModelClass, C extends Collection<T>> AssociationEndWrapper<T, C> create(
-			Class<? extends AssociationEnd<T, C>> typeOfWrapped) {
-		return create(InstanceCreator.create(typeOfWrapped, (Object) null));
-	}
+	abstract class Static {
 
-	static <T extends ModelClass, C extends Collection<T>> AssociationEndWrapper<T, C> create(
-			AssociationEnd<T, C> wrapped) {
-		return new AssociationEndWrapper<T, C>() {
+		private Static() {
+		}
 
-			private C collection = wrapped.createEmptyCollection();
+		@SuppressWarnings("unchecked")
+		public static <T extends ModelClass, C extends Collection<T>> AssociationEndWrapper<T, C> create(
+				Class<? extends AssociationEnd<T, ?>> otherEnd) {
+			return (AssociationEndWrapper<T, C>) create(InstanceCreator.create(otherEnd, (Object) null));
+		}
 
-			@Override
-			public AssociationEnd<T, C> getWrapped() {
-				return wrapped;
-			}
+		public static <T extends ModelClass, C extends Collection<T>> AssociationEndWrapper<T, C> create(
+				final AssociationEnd<T, C> wrapped) {
+			return new AssociationEndWrapper<T, C>() {
 
-			@Override
-			public C getCollection() {
-				return collection;
-			}
+				private C collection = wrapped.createEmptyCollection();
 
-			@Override
-			@SuppressWarnings("unchecked")
-			public void remove(T object) {
-				collection = (C) collection.remove(object);
-			}
-
-			@Override
-			@SuppressWarnings("unchecked")
-			public void add(T object) throws MultiplicityException {
-				if (!wrapped.checkUpperBound(collection.count() + 1)) {
-					throw new MultiplicityException();
+				@Override
+				public AssociationEnd<T, C> getWrapped() {
+					return wrapped;
 				}
-				collection = (C) collection.add(object);
-			}
 
-			@Override
-			public String toString() {
-				return "association_end<" + collection.toString() + ">";
-			}
+				@Override
+				public C getCollection() {
+					return collection;
+				}
 
-		};
+				@Override
+				@SuppressWarnings("unchecked")
+				public void remove(T object) {
+					collection = (C) collection.remove(object);
+				}
+
+				@Override
+				@SuppressWarnings("unchecked")
+				public void add(T object) throws MultiplicityException {
+					if (!wrapped.checkUpperBound(collection.count() + 1)) {
+						throw new MultiplicityException();
+					}
+					collection = (C) collection.add(object);
+				}
+
+				@Override
+				public boolean checkLowerBound() {
+					return getWrapped().checkLowerBound(getCollection().count());
+				}
+				
+				@Override
+				public boolean isEmpty() {
+					return getCollection().isEmpty();
+				}
+
+				@Override
+				public String toString() {
+					return "association_end<" + collection.toString() + ">";
+				}
+
+				@Override
+				public Class<?> getTypeOfWrapped() {
+					return getWrapped().getClass();
+				}
+
+			};
+		}
+
 	}
 
 }

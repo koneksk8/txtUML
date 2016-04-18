@@ -116,7 +116,7 @@ public class StateMachineTests extends UnitTestsBase {
 	public void testEntryExit() {
 		TraceListener mock = Mockito.mock(TraceListener.class);
 
-		ModelExecutor executor = ModelExecutor.create();
+		ModelExecutor executor = ModelExecutor.Static.create();
 		executor.addTraceListener(mock);
 
 		executor.run(() -> {

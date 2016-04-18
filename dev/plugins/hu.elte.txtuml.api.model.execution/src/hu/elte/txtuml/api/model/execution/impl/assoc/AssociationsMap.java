@@ -14,14 +14,14 @@ public class AssociationsMap extends HashMap<Class<? extends AssociationEnd<?, ?
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends ModelClass, C extends Collection<T>> AssociationEndWrapper<T, C> getEnd(
-			Class<? extends AssociationEnd<T, C>> otherEnd) {
-		return (AssociationEndWrapper<T, C>) super.get(otherEnd);
+	public <T extends ModelClass> AssociationEndWrapper<T, ?> getEnd(
+			Class<? extends AssociationEnd<T, ?>> otherEnd) {
+		return (AssociationEndWrapper<T, ?>) super.get(otherEnd);
 	}
 
-	public <T extends ModelClass, C extends Collection<T>> void putEnd(Class<? extends AssociationEnd<T, C>> otherEnd,
-			AssociationEndWrapper<T, C> wrapper) {
-		super.put(otherEnd, wrapper);
+	public <T extends ModelClass, C extends Collection<T>> void putEnd(Class<? extends AssociationEnd<T, ?>> otherEnd,
+			AssociationEndWrapper<T, ?> ret) {
+		super.put(otherEnd, ret);
 	}
 
 }

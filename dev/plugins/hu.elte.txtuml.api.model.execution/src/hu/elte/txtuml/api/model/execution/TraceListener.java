@@ -14,22 +14,16 @@ import hu.elte.txtuml.api.model.StateMachine.Vertex;
  */
 public interface TraceListener {
 
-	default void executionStarted() {
-	}
+	void executionStarted();
 
-	default void processingSignal(ModelClass object, Signal signal) {
-	}
+	void processingSignal(ModelClass object, Signal signal);
 
-	default void usingTransition(ModelClass object, Transition transition) {
-	}
+	void usingTransition(ModelClass object, Transition transition);
 
-	default void enteringVertex(ModelClass object, Vertex vertex) {
-	}
+	void enteringVertex(ModelClass object, Vertex vertex);
 
-	default void leavingVertex(ModelClass object, Vertex vertex) {
-	}
+	void leavingVertex(ModelClass object, Vertex vertex);
 
-	default void executionTerminated() {
-	}
+	void executionTerminated();
 
 }

@@ -14,12 +14,15 @@ import hu.elte.txtuml.api.model.ModelClass;
 import hu.elte.txtuml.api.model.ModelClass.Port;
 import hu.elte.txtuml.api.model.ModelClass.Status;
 import hu.elte.txtuml.api.model.assocends.ContainmentKind;
+import hu.elte.txtuml.api.model.execution.ErrorListener;
 import hu.elte.txtuml.api.model.execution.impl.assoc.AssociationEndWrapper;
 import hu.elte.txtuml.api.model.execution.impl.assoc.AssociationsMap;
 import hu.elte.txtuml.api.model.execution.impl.assoc.MultipleContainerException;
 import hu.elte.txtuml.api.model.execution.impl.assoc.MultiplicityException;
 import hu.elte.txtuml.api.model.execution.impl.base.AbstractModelClassWrapper;
 import hu.elte.txtuml.api.model.execution.impl.base.ModelExecutorThread;
+import hu.elte.txtuml.api.model.runtime.ModelClassWrapper;
+import hu.elte.txtuml.utils.Consumer;
 import hu.elte.txtuml.utils.InstanceCreator;
 
 /**
@@ -47,7 +50,13 @@ public class SingleThreadModelClassWrapper extends AbstractModelClassWrapper {
 	public void start() {
 		if (getStatus() != Status.READY) {
 			if (isDeleted()) {
-				getRuntime().error(x -> x.startingDeletedObject(getWrapped()));
+
+				getRuntime().error(new Consumer<ErrorListener>() {
+					@Override
+					public void accept(ErrorListener x) {
+						x.startingDeletedObject(getWrapped());
+					}
+				});
 			}
 			return;
 		}
@@ -64,7 +73,12 @@ public class SingleThreadModelClassWrapper extends AbstractModelClassWrapper {
 	@Override
 	public void delete() {
 		if (!isDeletable()) {
-			getRuntime().error(x -> x.objectCannotBeDeleted(getWrapped()));
+			getRuntime().error(new Consumer<ErrorListener>() {
+				@Override
+				public void accept(ErrorListener x) {
+					x.objectCannotBeDeleted(getWrapped());
+				}
+			});
 			return;
 		}
 
@@ -118,44 +132,58 @@ public class SingleThreadModelClassWrapper extends AbstractModelClassWrapper {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public <T extends ModelClass, C extends Collection<T>> AssociationEndWrapper<T, C> getAssoc(
 			Class<? extends AssociationEnd<T, C>> otherEnd) {
-		AssociationEndWrapper<T, C> ret = associations.getEnd(otherEnd);
+		return (AssociationEndWrapper<T, C>) getAssoc2(otherEnd);
+	}
+
+	@Override
+	public <T extends ModelClass> AssociationEndWrapper<T, ?> getAssoc2(
+			Class<? extends AssociationEnd<T, ?>> otherEnd) {
+		AssociationEndWrapper<T, ?> ret = associations.getEnd(otherEnd);
 		if (ret == null) {
-			ret = AssociationEndWrapper.create(otherEnd);
+			ret = AssociationEndWrapper.Static.create(otherEnd);
 			associations.putEnd(otherEnd, ret);
 		}
 		return ret;
 	}
-
+	
 	@Override
-	public <T extends ModelClass, C extends Collection<T>> boolean hasAssoc(
-			Class<? extends AssociationEnd<T, C>> otherEnd, T object) {
+	public <T extends ModelClass> boolean hasAssoc(
+			Class<? extends AssociationEnd<T, ?>> otherEnd, T object) {
 
 		AssociationEndWrapper<T, ?> actualOtherEnd = associations.getEnd(otherEnd);
 		return actualOtherEnd == null ? false : actualOtherEnd.getCollection().contains(object);
 	}
 
 	@Override
-	public <T extends ModelClass, C extends Collection<T>> void addToAssoc(
-			Class<? extends AssociationEnd<T, C>> otherEnd, T object)
+	public <T extends ModelClass> void addToAssoc(
+			Class<? extends AssociationEnd<T, ?>> otherEnd, T object)
 			throws MultiplicityException, MultipleContainerException {
 		containerCheck(otherEnd);
-		AssociationEndWrapper<T, ?> assocEnd = getAssoc(otherEnd);
+		AssociationEndWrapper<T, ?> assocEnd = getAssoc2(otherEnd);
 		assocEnd.add(object);
 	}
 
 	@Override
-	public <T extends ModelClass, C extends Collection<T>> void removeFromAssoc(
-			Class<? extends AssociationEnd<T, C>> otherEnd, T object) {
+	public <T extends ModelClass> void removeFromAssoc(
+			final Class<? extends AssociationEnd<T, ?>> otherEnd, T object) {
 
-		AssociationEndWrapper<T, C> assocEnd = getAssoc(otherEnd);
+		final AssociationEndWrapper<T, ?> assocEnd = getAssoc2(otherEnd);
 		assocEnd.remove(object);
 
 		if (getRuntime().dynamicChecks() && !assocEnd.checkLowerBound()) {
-			getThread().addDelayedAction(() -> {
-				if (!assocEnd.checkLowerBound()) {
-					getRuntime().error(x -> x.lowerBoundOfMultiplicityOffended(getWrapped(), otherEnd));
+			getThread().addDelayedAction(new Runnable() {
+				public void run() {
+					if (!assocEnd.checkLowerBound()) {
+						getRuntime().error(new Consumer<ErrorListener>() {
+							@Override
+							public void accept(ErrorListener x) {
+								x.lowerBoundOfMultiplicityOffended(getWrapped(), otherEnd);
+							}
+						});
+					}
 				}
 			});
 		}

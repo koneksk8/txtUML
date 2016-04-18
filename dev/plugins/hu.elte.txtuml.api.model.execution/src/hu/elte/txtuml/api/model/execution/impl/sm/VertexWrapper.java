@@ -10,19 +10,13 @@ public interface VertexWrapper extends Wrapper<Vertex> {
 
 	TransitionWrapper[] getOutgoings();
 
-	default boolean isChoice() {
-		return getWrapped() instanceof Choice;
-	}
+	boolean isChoice();
 
 	boolean isComposite();
 
-	default void performEntry() {
-		getWrapped().entry();
-	}
+	void performEntry();
 
-	default void performExit() {
-		getWrapped().exit();
-	}
+	void performExit();
 
 	VertexWrapper getInitialOfSubSM();
 
@@ -30,84 +24,114 @@ public interface VertexWrapper extends Wrapper<Vertex> {
 
 	// create methods
 
-	static VertexWrapper create(Vertex wrapped, VertexWrapper container, TransitionWrapper[] outgoings) {
-		return new VertexWrapper() {
+	abstract class Static {
 
-			@Override
-			public Vertex getWrapped() {
-				return wrapped;
-			}
+		private Static() {
+		}
 
-			@Override
-			public VertexWrapper getContainer() {
-				return container;
-			}
-
-			@Override
-			public TransitionWrapper[] getOutgoings() {
-				return outgoings;
-			}
-
-			@Override
-			public boolean isComposite() {
-				return false;
-			}
-
-			@Override
-			public VertexWrapper getInitialOfSubSM() {
-				throw new UnsupportedOperationException();
-			}
-
-			@Override
-			public void setSubSM(VertexWrapper initial) {
-				throw new UnsupportedOperationException();
-			}
-
-		};
-	}
-
-	static VertexWrapper createComposite(Vertex wrapped, VertexWrapper container, TransitionWrapper[] outgoings) {
-		return new VertexWrapper() {
-			private VertexWrapper initialOfSubSM = null;
-
-			@Override
-			public Vertex getWrapped() {
-				return wrapped;
-			}
-
-			@Override
-			public VertexWrapper getContainer() {
-				return container;
-			}
-
-			@Override
-			public TransitionWrapper[] getOutgoings() {
-				return outgoings;
-			}
-
-			@Override
-			public boolean isComposite() {
-				return true;
-			}
-
+		private static abstract class Base implements VertexWrapper {
 			@Override
 			public boolean isChoice() {
-				return false;
+				return getWrapped() instanceof Choice;
 			}
 
 			@Override
-			public VertexWrapper getInitialOfSubSM() {
-				return initialOfSubSM;
+			public Class<?> getTypeOfWrapped() {
+				return getWrapped().getClass();
 			}
 
 			@Override
-			public void setSubSM(VertexWrapper initial) {
-				if (initialOfSubSM == null) {
-					initialOfSubSM = initial;
+			public void performEntry() {
+				getWrapped().entry();
+			}
+
+			@Override
+			public void performExit() {
+				getWrapped().exit();
+			}
+
+		}
+
+		public static VertexWrapper create(final Vertex wrapped, final VertexWrapper container,
+				final TransitionWrapper[] outgoings) {
+			return new Base() {
+
+				@Override
+				public Vertex getWrapped() {
+					return wrapped;
 				}
-			}
 
-		};
+				@Override
+				public VertexWrapper getContainer() {
+					return container;
+				}
+
+				@Override
+				public TransitionWrapper[] getOutgoings() {
+					return outgoings;
+				}
+
+				@Override
+				public boolean isComposite() {
+					return false;
+				}
+
+				@Override
+				public VertexWrapper getInitialOfSubSM() {
+					throw new UnsupportedOperationException();
+				}
+
+				@Override
+				public void setSubSM(VertexWrapper initial) {
+					throw new UnsupportedOperationException();
+				}
+
+			};
+		}
+
+		public static VertexWrapper createComposite(final Vertex wrapped, final VertexWrapper container,
+				final TransitionWrapper[] outgoings) {
+			return new Base() {
+				private VertexWrapper initialOfSubSM = null;
+
+				@Override
+				public Vertex getWrapped() {
+					return wrapped;
+				}
+
+				@Override
+				public VertexWrapper getContainer() {
+					return container;
+				}
+
+				@Override
+				public TransitionWrapper[] getOutgoings() {
+					return outgoings;
+				}
+
+				@Override
+				public boolean isComposite() {
+					return true;
+				}
+
+				@Override
+				public boolean isChoice() {
+					return false;
+				}
+
+				@Override
+				public VertexWrapper getInitialOfSubSM() {
+					return initialOfSubSM;
+				}
+
+				@Override
+				public void setSubSM(VertexWrapper initial) {
+					if (initialOfSubSM == null) {
+						initialOfSubSM = initial;
+					}
+				}
+
+			};
+		}
 	}
-
 }

@@ -8,6 +8,9 @@ import hu.elte.txtuml.api.model.ModelClass.Status;
 import hu.elte.txtuml.api.model.Signal;
 import hu.elte.txtuml.api.model.StateMachine.Transition;
 import hu.elte.txtuml.api.model.assocends.Navigability.Navigable;
+import hu.elte.txtuml.api.model.execution.ErrorListener;
+import hu.elte.txtuml.api.model.execution.TraceListener;
+import hu.elte.txtuml.api.model.execution.WarningListener;
 import hu.elte.txtuml.api.model.execution.impl.assoc.AssociationEndWrapper;
 import hu.elte.txtuml.api.model.execution.impl.assoc.MultipleContainerException;
 import hu.elte.txtuml.api.model.execution.impl.assoc.MultiplicityException;
@@ -16,6 +19,7 @@ import hu.elte.txtuml.api.model.execution.impl.sm.TransitionWrapper;
 import hu.elte.txtuml.api.model.execution.impl.sm.VertexWrapper;
 import hu.elte.txtuml.api.model.runtime.ElseException;
 import hu.elte.txtuml.api.model.runtime.ModelClassWrapper;
+import hu.elte.txtuml.utils.Consumer;
 
 /**
  * Abstract base class for {@link ModelClassWrapper} implementations.
@@ -148,18 +152,29 @@ public abstract class AbstractModelClassWrapper extends AbstractSignalTargetWrap
 	 * @throws NullPointerException
 	 *             if {@code signal} is {@code null}
 	 */
-	protected void process(Signal signal, Port<?, ?> port) {
+	protected void process(final Signal signal, Port<?, ?> port) {
 		getThread().setCurrentTriggeringSignal(signal);
 
 		Status currentStatus = getStatus();
 		if (currentStatus != Status.ACTIVE) {
 			if (currentStatus == Status.DELETED) {
-				getRuntime().warning(x -> x.signalArrivedToDeletedObject(getWrapped(), signal));
+				getRuntime().warning(new Consumer<WarningListener>() {
+					@Override
+					public void accept(WarningListener x) {
+						x.signalArrivedToDeletedObject(getWrapped(), signal);
+					}
+				});
 				return;
 			}
 		} else {
 			if (signal != null) {
-				getRuntime().trace(x -> x.processingSignal(getWrapped(), signal));
+				getRuntime().trace(new Consumer<TraceListener>() {
+
+					@Override
+					public void accept(TraceListener x) {
+						x.processingSignal(getWrapped(), signal);
+					}
+				});
 			}
 
 			if (findAndExecuteTransition(signal, port)) {
@@ -169,8 +184,14 @@ public abstract class AbstractModelClassWrapper extends AbstractSignalTargetWrap
 		}
 
 		if (signal != null) {
-			getRuntime().warning(x -> x.lostSignalAtObject(signal, getWrapped()));
+			getRuntime().warning(new Consumer<WarningListener>() {
+				@Override
+				public void accept(WarningListener x) {
+					x.lostSignalAtObject(signal, getWrapped());
+				}
+			});
 		}
+
 	}
 
 	/**
@@ -193,7 +214,7 @@ public abstract class AbstractModelClassWrapper extends AbstractSignalTargetWrap
 
 		for (VertexWrapper examined = currentVertex; examined != null; examined = examined.getContainer()) {
 
-			for (TransitionWrapper transition : examined.getOutgoings()) {
+			for (final TransitionWrapper transition : examined.getOutgoings()) {
 
 				if (transition.notApplicableTrigger(signal, port)) {
 					continue;
@@ -204,7 +225,12 @@ public abstract class AbstractModelClassWrapper extends AbstractSignalTargetWrap
 						continue;
 					}
 				} catch (ElseException e) {
-					getRuntime().error(x -> x.elseGuardFromNonChoiceVertex(transition.getWrapped()));
+					getRuntime().error(new Consumer<ErrorListener>() {
+						@Override
+						public void accept(ErrorListener x) {
+							x.elseGuardFromNonChoiceVertex(transition.getWrapped());
+						}
+					});
 					continue;
 				}
 
@@ -212,8 +238,14 @@ public abstract class AbstractModelClassWrapper extends AbstractSignalTargetWrap
 					// there was already an applicable transition
 
 					final Transition tmp = applicableTransition.getWrapped();
-					getRuntime().error(x -> x.guardsOfTransitionsAreOverlapping(tmp, transition.getWrapped(),
-							currentVertex.getWrapped()));
+					getRuntime().error(new Consumer<ErrorListener>() {
+
+						@Override
+						public void accept(ErrorListener x) {
+							x.guardsOfTransitionsAreOverlapping(tmp, transition.getWrapped(),
+									currentVertex.getWrapped());
+						}
+					});
 					continue;
 				}
 
@@ -235,11 +267,17 @@ public abstract class AbstractModelClassWrapper extends AbstractSignalTargetWrap
 		executeTransition(fromState, applicableTransition);
 
 		if (currentVertex.isChoice()) {
-			getRuntime().trace(x -> x.enteringVertex(getWrapped(), currentVertex.getWrapped()));
+			getRuntime().trace(new Consumer<TraceListener>() {
+				@Override
+				public void accept(TraceListener x) {
+					x.enteringVertex(getWrapped(), currentVertex.getWrapped());
+				}
+			});
 			findAndExecuteTransitionFromChoice();
 		}
 
 		return true;
+
 	}
 
 	/**
@@ -251,7 +289,7 @@ public abstract class AbstractModelClassWrapper extends AbstractSignalTargetWrap
 		TransitionWrapper applicableTransition = null;
 		TransitionWrapper elseTransition = null;
 
-		for (TransitionWrapper transition : currentVertex.getOutgoings()) {
+		for (final TransitionWrapper transition : currentVertex.getOutgoings()) {
 			try {
 				if (!transition.checkGuard()) { // check guard
 					continue;
@@ -262,7 +300,12 @@ public abstract class AbstractModelClassWrapper extends AbstractSignalTargetWrap
 				if (elseTransition != null) {
 					// there was already a transition with an else condition
 
-					getRuntime().error(x -> x.moreThanOneElseTransitionsFromChoice(currentVertex.getWrapped()));
+					getRuntime().error(new Consumer<ErrorListener>() {
+						@Override
+						public void accept(ErrorListener x) {
+							x.moreThanOneElseTransitionsFromChoice(currentVertex.getWrapped());
+						}
+					});
 					continue;
 				}
 
@@ -275,8 +318,13 @@ public abstract class AbstractModelClassWrapper extends AbstractSignalTargetWrap
 				// there was already an applicable transition
 
 				final Transition tmp = applicableTransition.getWrapped();
-				getRuntime().error(x -> x.guardsOfTransitionsAreOverlapping(tmp, transition.getWrapped(),
-						currentVertex.getWrapped()));
+				getRuntime().error(new Consumer<ErrorListener>() {
+
+					@Override
+					public void accept(ErrorListener x) {
+						x.guardsOfTransitionsAreOverlapping(tmp, transition.getWrapped(), currentVertex.getWrapped());
+					}
+				});
 
 				continue;
 			}
@@ -301,9 +349,15 @@ public abstract class AbstractModelClassWrapper extends AbstractSignalTargetWrap
 			} else {
 				// no way to move from choice
 
-				getRuntime().error(x -> x.noTransitionFromChoice(currentVertex.getWrapped()));
+				getRuntime().error(new Consumer<ErrorListener>() {
+					@Override
+					public void accept(ErrorListener x) {
+						x.noTransitionFromChoice(currentVertex.getWrapped());
+					}
+				});
 				return;
 			}
+
 		}
 
 		if (currentVertex.isChoice()) {
@@ -317,9 +371,14 @@ public abstract class AbstractModelClassWrapper extends AbstractSignalTargetWrap
 	 * @param transition
 	 *            the transition to be executed
 	 */
-	private void executeTransition(VertexWrapper fromVertex, TransitionWrapper transition) {
+	private void executeTransition(VertexWrapper fromVertex, final TransitionWrapper transition) {
 		callExitAction(fromVertex);
-		getRuntime().trace(x -> x.usingTransition(getWrapped(), transition.getWrapped()));
+		getRuntime().trace(new Consumer<TraceListener>() {
+			@Override
+			public void accept(TraceListener x) {
+				x.usingTransition(getWrapped(), transition.getWrapped());
+			}
+		});
 		transition.performEffect();
 		currentVertex = transition.getTarget();
 	}
@@ -339,7 +398,12 @@ public abstract class AbstractModelClassWrapper extends AbstractSignalTargetWrap
 	private void callExitAction(VertexWrapper vertex) {
 		while (true) {
 			currentVertex.performExit();
-			getRuntime().trace(x -> x.leavingVertex(getWrapped(), currentVertex.getWrapped()));
+			getRuntime().trace(new Consumer<TraceListener>() {
+				@Override
+				public void accept(TraceListener x) {
+					x.leavingVertex(getWrapped(), currentVertex.getWrapped());
+				}
+			});
 
 			if (currentVertex == vertex) {
 				break;
@@ -358,11 +422,21 @@ public abstract class AbstractModelClassWrapper extends AbstractSignalTargetWrap
 	 * is neither a pseudostate, nor a composite state.
 	 */
 	private void callEntryAction() {
-		getRuntime().trace(x -> x.enteringVertex(getWrapped(), currentVertex.getWrapped()));
+		getRuntime().trace(new Consumer<TraceListener>() {
+			@Override
+			public void accept(TraceListener x) {
+				x.enteringVertex(getWrapped(), currentVertex.getWrapped());
+			}
+		});
 		currentVertex.performEntry();
 		if (currentVertex.isComposite()) {
 			currentVertex = currentVertex.getInitialOfSubSM();
-			getRuntime().trace(x -> x.enteringVertex(getWrapped(), currentVertex.getWrapped()));
+			getRuntime().trace(new Consumer<TraceListener>() {
+				@Override
+				public void accept(TraceListener x) {
+					x.enteringVertex(getWrapped(), currentVertex.getWrapped());
+				}
+			});
 			// no entry action needs to be called: initial pseudostates have
 			// none
 
@@ -384,20 +458,28 @@ public abstract class AbstractModelClassWrapper extends AbstractSignalTargetWrap
 			Class<? extends AssociationEnd<T, C>> otherEnd);
 
 	/**
+	 * Returns the wrapper of the requested association end which has the
+	 * collection containing the objects in association with the wrapped
+	 * ModelClass instance and being on the specified opposite association end.
+	 */
+	public abstract <T extends ModelClass> AssociationEndWrapper<T, ?> getAssoc2(
+			Class<? extends AssociationEnd<T, ?>> otherEnd);
+
+	/**
 	 * Checks if the specified object is element of the collection containing
 	 * the objects in association with the wrapped ModelClass instance and being
 	 * on the specified opposite association end.
 	 */
-	public abstract <T extends ModelClass, C extends Collection<T>> boolean hasAssoc(
-			Class<? extends AssociationEnd<T, C>> otherEnd, T object);
+	public abstract <T extends ModelClass> boolean hasAssoc(
+			Class<? extends AssociationEnd<T, ?>> otherEnd, T object);
 
 	/**
 	 * Adds the specified object to the collection containing the objects in
 	 * association with the wrapped ModelClass instance and being on the
 	 * specified opposite association end.
 	 */
-	public abstract <T extends ModelClass, C extends Collection<T>> void addToAssoc(
-			Class<? extends AssociationEnd<T, C>> otherEnd, T object)
+	public abstract <T extends ModelClass> void addToAssoc(
+			Class<? extends AssociationEnd<T, ?>> otherEnd, T object)
 			throws MultiplicityException, MultipleContainerException;
 
 	/**
@@ -405,8 +487,8 @@ public abstract class AbstractModelClassWrapper extends AbstractSignalTargetWrap
 	 * in association with the wrapped ModelClass instance and being on the
 	 * specified opposite association end.
 	 */
-	public abstract <T extends ModelClass, C extends Collection<T>> void removeFromAssoc(
-			Class<? extends AssociationEnd<T, C>> otherEnd, T object);
+	public abstract <T extends ModelClass> void removeFromAssoc(
+			Class<? extends AssociationEnd<T, ?>> otherEnd, T object);
 
 	@Override
 	public abstract void delete();

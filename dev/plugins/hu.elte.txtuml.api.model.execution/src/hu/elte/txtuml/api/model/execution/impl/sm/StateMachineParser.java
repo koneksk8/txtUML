@@ -33,17 +33,17 @@ public final class StateMachineParser {
 	private VertexWrapper parse() {
 		parsePartOfSM(owner, null);
 
-		transitions.forEach(t -> {
+		for (TransitionWrapperBuilder t : transitions) {
 			VertexWrapperBuilder source = vertices.get(t.typeOfSource);
 			VertexWrapperBuilder target = vertices.get(t.typeOfTarget);
 
 			if (source == null || target == null) {
-				return;
+				continue;
 			}
 
 			source.outgoings.add(t);
 			t.target = target;
-		});
+		}
 
 		return initial == null ? null : initial.get();
 	}
@@ -95,13 +95,15 @@ public final class StateMachineParser {
 			TransitionWrapper[] arrayOfOutGoings = new TransitionWrapper[outgoings.size()];
 
 			if (initialOfSubSM != null) {
-				result = VertexWrapper.createComposite(getWrapped(), builtContainer, arrayOfOutGoings);
+				result = VertexWrapper.Static.createComposite(getWrapped(), builtContainer, arrayOfOutGoings);
 				result.setSubSM(initialOfSubSM.get());
 			} else {
-				result = VertexWrapper.create(getWrapped(), builtContainer, arrayOfOutGoings);
+				result = VertexWrapper.Static.create(getWrapped(), builtContainer, arrayOfOutGoings);
 			}
 
-			outgoings.stream().map(TransitionWrapperBuilder::get).toArray(i -> arrayOfOutGoings);
+			for (int i = 0; i < outgoings.size(); ++i) {
+				arrayOfOutGoings[i] = outgoings.get(i).get();
+			}
 		}
 	}
 
@@ -123,7 +125,7 @@ public final class StateMachineParser {
 		}
 
 		protected void build() {
-			result = TransitionWrapper.create(getWrapped(), target.get());
+			result = TransitionWrapper.Static.create(getWrapped(), target.get());
 		}
 	}
 

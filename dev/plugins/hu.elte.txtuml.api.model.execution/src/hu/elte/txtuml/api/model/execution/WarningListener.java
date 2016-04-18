@@ -14,17 +14,13 @@ import hu.elte.txtuml.api.model.Signal;
  */
 public interface WarningListener {
 
-	default <L extends ModelClass, R extends ModelClass> void unlinkingNonExistingAssociation(
+	<L extends ModelClass, R extends ModelClass> void unlinkingNonExistingAssociation(
 			Class<? extends AssociationEnd<L, ?>> leftEnd, L leftObj, Class<? extends AssociationEnd<R, ?>> rightEnd,
-			R rightObj) {
-	}
+			R rightObj);
 
-	default void signalArrivedToDeletedObject(ModelClass obj, Signal signal) {
-	}
+	void signalArrivedToDeletedObject(ModelClass obj, Signal signal);
 
-	default void lostSignalAtObject(Signal signal, ModelClass obj) {
-	}
+	void lostSignalAtObject(Signal signal, ModelClass obj);
 
-	default void lostSignalAtPort(Signal signal, Port<?, ?> portInstance) {
-	}
+	void lostSignalAtPort(Signal signal, Port<?, ?> portInstance);
 }

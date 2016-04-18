@@ -2,7 +2,9 @@ package hu.elte.txtuml.api.model.execution.impl.base;
 
 import hu.elte.txtuml.api.model.ModelClass.Port;
 import hu.elte.txtuml.api.model.Signal;
+import hu.elte.txtuml.api.model.execution.WarningListener;
 import hu.elte.txtuml.api.model.runtime.PortWrapper;
+import hu.elte.txtuml.utils.Consumer;
 
 /**
  * Abstract base class for {@link PortWrapper} implementations.
@@ -47,12 +49,17 @@ public abstract class AbstractPortWrapper extends AbstractSignalTargetWrapper<Po
 	 * Sends the given signal to the given target unless target is null. In the
 	 * latter case, a runtime warning is shown about a lost signal at this port.
 	 */
-	protected void tryToSend(Signal signal, AbstractSignalTargetWrapper<?> target) {
+	protected void tryToSend(final Signal signal, AbstractSignalTargetWrapper<?> target) {
 		if (target != null) {
 			target.send(signal, this);
 			return;
 		}
-		getRuntime().warning(x -> x.lostSignalAtPort(signal, getWrapped()));
+		getRuntime().warning(new Consumer<WarningListener>() {
+			@Override
+			public void accept(WarningListener x) {
+				x.lostSignalAtPort(signal, getWrapped());
+			}
+		});
 	}
 
 	/**

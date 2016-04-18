@@ -25,7 +25,7 @@ public class UnitTestsBase {
 
 	@Before
 	public void settings() {
-		executor = ModelExecutor.create().setDynamicChecks(true);
+		executor = ModelExecutor.Static.create().setDynamicChecks(true);
 		executionAsserter = new ModelExecutionAsserter(executor);
 	}
 

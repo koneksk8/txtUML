@@ -17,6 +17,7 @@ import hu.elte.txtuml.api.model.execution.impl.base.AbstractModelExecutor;
 import hu.elte.txtuml.api.model.execution.impl.base.AbstractPortWrapper;
 import hu.elte.txtuml.api.model.execution.impl.base.AbstractRuntime;
 import hu.elte.txtuml.api.model.execution.impl.base.ModelExecutorThread;
+import hu.elte.txtuml.utils.Consumer;
 
 /**
  * Abstract base class for {@link Runtime} implementations which belong to model
@@ -54,9 +55,9 @@ public abstract class SingleThreadRuntime<C extends AbstractModelClassWrapper, P
 			P1 parentPort, Class<C0> childEnd, P2 childPort) {
 		P parent = getInfo(parentPort);
 		P child = getInfo(childPort);
-		
+
 		if (parent.getInnerConnection() == null) {
-			parent.setInnerConnection(child);			
+			parent.setInnerConnection(child);
 		} else {
 			parent.setOuterConnection(child);
 		}
@@ -69,36 +70,54 @@ public abstract class SingleThreadRuntime<C extends AbstractModelClassWrapper, P
 	}
 
 	@Override
-	public <L extends ModelClass, R extends ModelClass> void link(Class<? extends AssociationEnd<L, ?>> leftEnd,
-			L leftObj, Class<? extends AssociationEnd<R, ?>> rightEnd, R rightObj) {
-		C left = getInfo(leftObj);
-		C right = getInfo(rightObj);
+	public <L extends ModelClass, R extends ModelClass> void link(final Class<? extends AssociationEnd<L, ?>> leftEnd,
+			final L leftObj, final Class<? extends AssociationEnd<R, ?>> rightEnd, final R rightObj) {
+		final C left = getInfo(leftObj);
+		final C right = getInfo(rightObj);
 
 		if (isLinkingDeleted(left) || isLinkingDeleted(right)) {
 			return;
 		}
 
-		tryAddToAssoc(left, rightEnd, right, rightObj, () -> {
+		tryAddToAssoc(left, rightEnd, right, rightObj, new Runnable() {
+			@Override
+			public void run() {
+			}
 		});
-		tryAddToAssoc(right, leftEnd, left, leftObj, () -> left.removeFromAssoc(rightEnd, rightObj));
+		tryAddToAssoc(right, leftEnd, left, leftObj, new Runnable() {
+			@Override
+			public void run() {
+				left.removeFromAssoc(rightEnd, rightObj);
+			}
+		});
 	}
 
-	protected <R extends ModelClass> void tryAddToAssoc(C left, Class<? extends AssociationEnd<R, ?>> rightEnd, C right,
-			R rightObj, Runnable rollBack) {
+	protected <R extends ModelClass> void tryAddToAssoc(final C left,
+			final Class<? extends AssociationEnd<R, ?>> rightEnd, C right, R rightObj, Runnable rollBack) {
 		try {
 			left.addToAssoc(rightEnd, rightObj);
 			return;
 		} catch (MultiplicityException e) {
-			error(x -> x.upperBoundOfMultiplicityOffended(left.getWrapped(), rightEnd));
+			error(new Consumer<ErrorListener>() {
+				@Override
+				public void accept(ErrorListener x) {
+					x.upperBoundOfMultiplicityOffended(left.getWrapped(), rightEnd);
+				}
+			});
 		} catch (MultipleContainerException e) {
-			error(x -> x.multipleContainerForAnObject(left.getWrapped(), rightEnd));
+			error(new Consumer<ErrorListener>() {
+				@Override
+				public void accept(ErrorListener x) {
+					x.multipleContainerForAnObject(left.getWrapped(), rightEnd);
+				}
+			});
 		}
 		rollBack.run();
 	}
 
 	@Override
-	public <L extends ModelClass, R extends ModelClass> void unlink(Class<? extends AssociationEnd<L, ?>> leftEnd,
-			L leftObj, Class<? extends AssociationEnd<R, ?>> rightEnd, R rightObj) {
+	public <L extends ModelClass, R extends ModelClass> void unlink(final Class<? extends AssociationEnd<L, ?>> leftEnd,
+			final L leftObj, final Class<? extends AssociationEnd<R, ?>> rightEnd, final R rightObj) {
 		C left = getInfo(leftObj);
 		C right = getInfo(rightObj);
 
@@ -108,7 +127,12 @@ public abstract class SingleThreadRuntime<C extends AbstractModelClassWrapper, P
 
 		if (dynamicChecks()) {
 			if (!left.hasAssoc(rightEnd, rightObj)) {
-				warning(x -> x.unlinkingNonExistingAssociation(leftEnd, leftObj, rightEnd, rightObj));
+				warning(new Consumer<WarningListener>() {
+					@Override
+					public void accept(WarningListener x) {
+						x.unlinkingNonExistingAssociation(leftEnd, leftObj, rightEnd, rightObj);
+					}
+				});
 				return;
 			}
 		}
@@ -121,7 +145,7 @@ public abstract class SingleThreadRuntime<C extends AbstractModelClassWrapper, P
 
 	@Override
 	public abstract void start();
-	
+
 	@Override
 	protected abstract C createModelClassWrapper(ModelClass object);
 

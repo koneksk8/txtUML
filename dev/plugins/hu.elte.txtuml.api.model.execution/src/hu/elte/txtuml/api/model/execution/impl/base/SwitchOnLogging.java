@@ -26,9 +26,14 @@ public enum SwitchOnLogging {
 	DIAGNOSTICS_SERVICE {
 		@Override
 		public void switchOnFor(ModelExecutor executor) {
-			DiagnosticsService service = new DiagnosticsService();
+			final DiagnosticsService service = new DiagnosticsService();
 			executor.addTraceListener(service);
-			executor.addTerminationListener(service::shutdown);
+			executor.addTerminationListener(new Runnable() {
+				@Override
+				public void run() {
+					service.shutdown();
+				}
+			});
 		}
 	},
 	DEFAULT_LOGGING_AND_DIAGNOSTICS_SERVICE {

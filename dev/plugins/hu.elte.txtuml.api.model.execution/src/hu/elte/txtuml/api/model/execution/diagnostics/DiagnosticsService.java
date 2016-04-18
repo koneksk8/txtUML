@@ -66,7 +66,12 @@ public class DiagnosticsService extends NotifierOfTermination implements TraceLi
 		}
 		diagnosticsPort = port;
 
-		addTerminationListener(() -> sendMessage(new Message(MessageType.CHECKOUT, serviceInstanceID)));
+		addTerminationListener(new Runnable() {
+			@Override
+			public void run() {
+				sendMessage(new Message(MessageType.CHECKOUT, serviceInstanceID));
+			}
+		});
 
 		Logger.sys.info("txtUML Diagnostics connection is set on " + diagnosticsPort + " for service instance 0x"
 				+ Integer.toHexString(serviceInstanceID));
@@ -99,6 +104,14 @@ public class DiagnosticsService extends NotifierOfTermination implements TraceLi
 	public void leavingVertex(ModelClass object, Vertex vertex) {
 		sendNewModelEvent(MessageType.LEAVING_VERTEX, object.getClass().getCanonicalName(),
 				object.runtimeInfo().getIdentifier(), vertex.getClass().getCanonicalName());
+	}
+
+	@Override
+	public void executionStarted() {
+	}
+
+	@Override
+	public void executionTerminated() {
 	}
 
 	private void sendNewModelEvent(MessageType type, String modelClassName, String modelClassInstanceID,

@@ -26,70 +26,91 @@ public interface TransitionWrapper extends Wrapper<Transition> {
 	 */
 	boolean notApplicableTrigger(Signal signal, Port<?, ?> port);
 
-	default boolean checkGuard() throws ElseException {
-		return getWrapped().guard();
-	}
+	boolean checkGuard() throws ElseException;
 
-	default void performEffect() {
-		getWrapped().effect();
-	}
+	void performEffect();
 
 	// create methods
 
-	static TransitionWrapper create(Transition wrapped, VertexWrapper target) {
-		Trigger trigger = wrapped.getClass().getAnnotation(Trigger.class);
-		if (trigger == null) {
-			return createUnlabeled(wrapped, target);
-		} else {
-			return createLabeled(wrapped, target, trigger.value(), trigger.port());
+	abstract class Static {
+
+		private Static() {
+
 		}
-	}
 
-	static TransitionWrapper createUnlabeled(Transition wrapped, VertexWrapper target) {
-		return new TransitionWrapper() {
+		private static abstract class Base implements TransitionWrapper {
 
 			@Override
-			public Transition getWrapped() {
-				return wrapped;
+			public Class<?> getTypeOfWrapped() {
+				return getWrapped().getClass();
 			}
 
 			@Override
-			public VertexWrapper getTarget() {
-				return target;
+			public boolean checkGuard() throws ElseException {
+				return getWrapped().guard();
 			}
 
 			@Override
-			public boolean notApplicableTrigger(Signal signal, Port<?, ?> port) {
-				return signal != null;
+			public void performEffect() {
+				getWrapped().effect();
 			}
+		}
 
-		};
-	}
-
-	static TransitionWrapper createLabeled(Transition wrapped, VertexWrapper target, Class<? extends Signal> trigger,
-			Class<? extends Port<?, ?>> portOfTrigger) {
-		return new TransitionWrapper() {
-
-			@Override
-			public Transition getWrapped() {
-				return wrapped;
+		static TransitionWrapper create(Transition wrapped, VertexWrapper target) {
+			Trigger trigger = wrapped.getClass().getAnnotation(Trigger.class);
+			if (trigger == null) {
+				return createUnlabeled(wrapped, target);
+			} else {
+				return createLabeled(wrapped, target, trigger.value(), trigger.port());
 			}
+		}
 
-			@Override
-			public VertexWrapper getTarget() {
-				return target;
-			}
+		static TransitionWrapper createUnlabeled(final Transition wrapped, final VertexWrapper target) {
+			return new Base() {
 
-			@Override
-			public boolean notApplicableTrigger(Signal signal, Port<?, ?> portInstance) {
-				if (trigger.isInstance(signal)
-						&& (portOfTrigger == AnyPort.class || portOfTrigger.isInstance(portInstance))) {
-					return false;
+				@Override
+				public Transition getWrapped() {
+					return wrapped;
 				}
-				return true;
-			}
 
-		};
+				@Override
+				public VertexWrapper getTarget() {
+					return target;
+				}
+
+				@Override
+				public boolean notApplicableTrigger(Signal signal, Port<?, ?> port) {
+					return signal != null;
+				}
+
+			};
+		}
+
+		static TransitionWrapper createLabeled(final Transition wrapped, final VertexWrapper target,
+				final Class<? extends Signal> trigger, final Class<? extends Port<?, ?>> portOfTrigger) {
+			return new Base() {
+
+				@Override
+				public Transition getWrapped() {
+					return wrapped;
+				}
+
+				@Override
+				public VertexWrapper getTarget() {
+					return target;
+				}
+
+				@Override
+				public boolean notApplicableTrigger(Signal signal, Port<?, ?> portInstance) {
+					if (trigger.isInstance(signal)
+							&& (portOfTrigger == AnyPort.class || portOfTrigger.isInstance(portInstance))) {
+						return false;
+					}
+					return true;
+				}
+
+			};
+		}
 	}
 
 }

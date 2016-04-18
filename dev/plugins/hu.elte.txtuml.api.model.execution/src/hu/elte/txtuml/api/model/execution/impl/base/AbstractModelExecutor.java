@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CountDownLatch;
@@ -39,7 +40,12 @@ public abstract class AbstractModelExecutor<S extends AbstractModelExecutor<S>> 
 	private final SwitchOnLogging switchOnLogging;
 
 	private final ConcurrentSkipListSet<Object> terminationBlockers = new ConcurrentSkipListSet<>(
-			(t1, t2) -> Integer.compare(t1.hashCode(), t2.hashCode()));
+			new Comparator<Object>() {
+				@Override
+				public int compare(Object o1, Object o2) {
+					return Integer.compare(o1.hashCode(), o2.hashCode());
+				};
+			});
 	private final Object defaultBlocker = createAndAddDefaultTerminationBlocker();
 
 	private final CountDownLatch isInitialized = new CountDownLatch(1);
@@ -85,13 +91,18 @@ public abstract class AbstractModelExecutor<S extends AbstractModelExecutor<S>> 
 		switchOnLogging.switchOnFor(this);
 
 		status = Status.ACTIVE;
-		traceListeners.forEach(x -> x.executionStarted());
+		for (TraceListener x : traceListeners) {
+			x.executionStarted();
+		}
 
-		createRuntime(() -> {
-			if (initialization != null) {
-				initialization.run();
+		createRuntime(new Runnable() {
+			@Override
+			public void run() {
+				if (initialization != null) {
+					initialization.run();
+				}
+				isInitialized.countDown();
 			}
-			isInitialized.countDown();
 		}).start();
 
 		return self();
@@ -311,7 +322,9 @@ public abstract class AbstractModelExecutor<S extends AbstractModelExecutor<S>> 
 	protected void performTermination() {
 		terminationManager.notifyAllOfTermination();
 		status = Status.TERMINATED;
-		traceListeners.forEach(x -> x.executionTerminated());
+		for (TraceListener x : traceListeners) {
+			x.executionTerminated();
+		}
 	}
 
 	/**

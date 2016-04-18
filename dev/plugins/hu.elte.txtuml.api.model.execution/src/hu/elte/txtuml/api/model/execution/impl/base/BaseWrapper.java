@@ -18,6 +18,11 @@ public class BaseWrapper<W> implements Wrapper<W> {
 	};
 
 	@Override
+	public Class<?> getTypeOfWrapped() {
+		return wrapped.getClass();
+	}
+	
+	@Override
 	public String toString() {
 		return wrapped.toString();
 	}

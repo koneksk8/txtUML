@@ -7,7 +7,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 
 import hu.elte.txtuml.api.model.ModelClass;
 import hu.elte.txtuml.api.model.ModelClass.Port;
@@ -17,6 +16,7 @@ import hu.elte.txtuml.api.model.execution.TraceListener;
 import hu.elte.txtuml.api.model.execution.WarningListener;
 import hu.elte.txtuml.api.model.runtime.ModelClassWrapper;
 import hu.elte.txtuml.api.model.runtime.PortWrapper;
+import hu.elte.txtuml.utils.Consumer;
 
 /**
  * Abstract base class for {@link Runtime} implementations.
@@ -88,12 +88,17 @@ public abstract class AbstractRuntime<C extends ModelClassWrapper, P extends Por
 	}
 
 	@Override
-	public <V> ScheduledFuture<V> schedule(Callable<V> callable, long delay, TimeUnit unit) {
+	public <V> ScheduledFuture<V> schedule(final Callable<V> callable, long delay, TimeUnit unit) {
 		ScheduledExecutorService currentScheduler;
 		synchronized (LOCK_ON_SCHEDULER) {
 			if (scheduler == null) {
 				scheduler = createScheduler();
-				getExecutor().addTerminationListener(scheduler::shutdownNow);
+				getExecutor().addTerminationListener(new Runnable() {
+					@Override
+					public void run() {
+						scheduler.shutdownNow();
+					}
+				});
 			}
 			currentScheduler = scheduler;
 			if (scheduledCount == 0) {
@@ -102,27 +107,36 @@ public abstract class AbstractRuntime<C extends ModelClassWrapper, P extends Por
 			++scheduledCount;
 		}
 
-		return currentScheduler.schedule(() -> {
-			synchronized (LOCK_ON_SCHEDULER) {
-				--scheduledCount;
-				if (scheduledCount == 0) {
-					getExecutor().removeTerminationBlocker(LOCK_ON_SCHEDULER);
+		return currentScheduler.schedule(new Callable<V>() {
+			@Override
+			public V call() throws Exception {
+				synchronized (LOCK_ON_SCHEDULER) {
+					--scheduledCount;
+					if (scheduledCount == 0) {
+						getExecutor().removeTerminationBlocker(LOCK_ON_SCHEDULER);
+					}
 				}
+				return callable.call();
 			}
-			return callable.call();
 		}, inExecutionTime(delay), unit);
 	}
 
 	public void trace(Consumer<TraceListener> eventReporter) {
-		traceListeners.forEach(eventReporter);
+		for (TraceListener x : traceListeners) {
+			eventReporter.accept(x);
+		}
 	}
 
 	public void error(Consumer<ErrorListener> errorReporter) {
-		errorListeners.forEach(errorReporter);
+		for (ErrorListener x : errorListeners) {
+			errorReporter.accept(x);
+		}
 	}
 
 	public void warning(Consumer<WarningListener> warningReporter) {
-		warningListeners.forEach(warningReporter);
+		for (WarningListener x : warningListeners) {
+			warningReporter.accept(x);
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -147,9 +161,14 @@ public abstract class AbstractRuntime<C extends ModelClassWrapper, P extends Por
 	 * @throws NullPointerException
 	 *             if {@code object} is {@code null}
 	 */
-	protected boolean isLinkingDeleted(AbstractModelClassWrapper wrapper) {
+	protected boolean isLinkingDeleted(final AbstractModelClassWrapper wrapper) {
 		if (wrapper.isDeleted()) {
-			error(x -> x.linkingDeletedObject(wrapper.getWrapped()));
+			error(new Consumer<ErrorListener>() {
+				@Override
+				public void accept(ErrorListener x) {
+					x.linkingDeletedObject(wrapper.getWrapped());
+				}
+			});
 			return true;
 		}
 		return false;
@@ -167,10 +186,14 @@ public abstract class AbstractRuntime<C extends ModelClassWrapper, P extends Por
 	 * @throws NullPointerException
 	 *             if {@code object} is {@code null}
 	 */
-	protected boolean isUnlinkingDeleted(AbstractModelClassWrapper wrapper) {
+	protected boolean isUnlinkingDeleted(final AbstractModelClassWrapper wrapper) {
 		if (wrapper.isDeleted()) {
-			error(x -> x.unlinkingDeletedObject(wrapper.getWrapped()));
-			return true;
+			error(new Consumer<ErrorListener>() {
+				@Override
+				public void accept(ErrorListener x) {
+					x.unlinkingDeletedObject(wrapper.getWrapped());
+				}
+			});			return true;
 		}
 		return false;
 	}

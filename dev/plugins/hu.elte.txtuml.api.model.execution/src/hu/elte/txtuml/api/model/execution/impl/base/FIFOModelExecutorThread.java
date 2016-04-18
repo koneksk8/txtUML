@@ -33,28 +33,51 @@ public class FIFOModelExecutorThread extends ModelExecutorThread {
 
 	@Override
 	public void wake() {
-		mailbox.add(() -> {
+		mailbox.add(new Runnable() {
+			@Override
+			public void run() {
+			}
 		});
 	}
 
 	@Override
-	public void send(Signal signal, AbstractPortWrapper target) {
-		addEntry(() -> target.receive(signal));
+	public void send(final Signal signal, final AbstractPortWrapper target) {
+		addEntry(new Runnable() {
+			@Override
+			public void run() {
+				target.receive(signal);
+			}
+		});
 	}
 
 	@Override
-	public void send(Signal signal, AbstractModelClassWrapper target) {
-		addEntry(() -> target.receive(signal));
+	public void send(final Signal signal, final AbstractModelClassWrapper target) {
+		addEntry(new Runnable() {
+			@Override
+			public void run() {
+				target.receive(signal);
+			}
+		});
 	}
 
 	@Override
-	public void send(Signal signal, AbstractPortWrapper sender, AbstractPortWrapper target) {
-		addEntry(() -> target.receive(signal, sender));
+	public void send(final Signal signal, final AbstractPortWrapper sender, final AbstractPortWrapper target) {
+		addEntry(new Runnable() {
+			@Override
+			public void run() {
+				target.receive(signal, sender);
+			}
+		});
 	}
 
 	@Override
-	public void send(Signal signal, AbstractPortWrapper sender, AbstractModelClassWrapper target) {
-		addEntry(() -> target.receive(signal, sender));
+	public void send(final Signal signal, final AbstractPortWrapper sender, final AbstractModelClassWrapper target) {
+		addEntry(new Runnable() {
+			@Override
+			public void run() {
+				target.receive(signal, sender);
+			}
+		});
 	}
 
 	/**

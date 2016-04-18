@@ -25,26 +25,33 @@ import hu.elte.txtuml.api.model.runtime.BaseModelExecutor;
  */
 public interface ModelExecutor extends BaseModelExecutor, Runnable {
 
-	/**
-	 * Creates a default model executor engine without a name.
-	 * <p>
-	 * <b>Note:</b> Instantiates the
-	 * {@link hu.elte.txtuml.api.model.execution.impl.DefaultModelExecutor}
-	 * class.
-	 */
-	static ModelExecutor create() {
-		return new DefaultModelExecutor();
-	}
+	abstract class Static {
 
-	/**
-	 * Creates a default model executor engine with the given name.
-	 * <p>
-	 * <b>Note:</b> Instantiates the
-	 * {@link hu.elte.txtuml.api.model.execution.impl.DefaultModelExecutor}
-	 * class.
-	 */
-	static ModelExecutor create(String name) {
-		return new DefaultModelExecutor(name);
+		private Static() {
+		}
+
+		/**
+		 * Creates a default model executor engine without a name.
+		 * <p>
+		 * <b>Note:</b> Instantiates the
+		 * {@link hu.elte.txtuml.api.model.execution.impl.DefaultModelExecutor}
+		 * class.
+		 */
+		public static ModelExecutor create() {
+			return new DefaultModelExecutor();
+		}
+
+		/**
+		 * Creates a default model executor engine with the given name.
+		 * <p>
+		 * <b>Note:</b> Instantiates the
+		 * {@link hu.elte.txtuml.api.model.execution.impl.DefaultModelExecutor}
+		 * class.
+		 */
+		public static ModelExecutor create(String name) {
+			return new DefaultModelExecutor(name);
+		}
+
 	}
 
 	/**
