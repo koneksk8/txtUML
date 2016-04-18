@@ -4,6 +4,7 @@ Bundle-Name: txtUML Utils
 Bundle-SymbolicName: hu.elte.txtuml.utils
 Bundle-Version: 0.4.0.qualifier
 Bundle-Vendor: ELTE
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: hu.elte.txtuml.utils
-Require-Bundle: org.apache.log4j
+Require-Bundle: org.apache.log4j,
+ com.google.guava

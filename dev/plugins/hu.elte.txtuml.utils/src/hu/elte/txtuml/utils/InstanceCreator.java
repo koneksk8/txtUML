@@ -2,7 +2,6 @@ package hu.elte.txtuml.utils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Parameter;
 
 /**
  * A utility class to create instances of classes specified by their
@@ -24,16 +23,14 @@ public final class InstanceCreator {
 	 * @throws RuntimeInvocationTargetException
 	 *             if the called constructor throws an exception
 	 */
-	public static <T> T create(Class<T> toInstantiate,
-			Object... constructorParams) throws IllegalArgumentException,
-			RuntimeInvocationTargetException {
+	public static <T> T create(Class<T> toInstantiate, Object... constructorParams)
+			throws IllegalArgumentException, RuntimeInvocationTargetException {
 
 		if (toInstantiate.isPrimitive()) {
 			if (constructorParams.length == 0) {
 				return getDefaultPrimitiveValue(toInstantiate);
 			} else {
-				throw new IllegalArgumentException(
-						"Primitive values cannot be instantiated with parameters");
+				throw new IllegalArgumentException("Primitive values cannot be instantiated with parameters");
 			}
 		}
 		T ret = null;
@@ -47,8 +44,7 @@ public final class InstanceCreator {
 			}
 		}
 		throw new IllegalArgumentException(
-				"No constructors could be applied to create an instance of "
-						+ toInstantiate);
+				"No constructors could be applied to create an instance of " + toInstantiate);
 	}
 
 	/**
@@ -56,16 +52,14 @@ public final class InstanceCreator {
 	 * implicit parameters. Checks are left for the newInstance call.
 	 */
 	@SuppressWarnings("unchecked")
-	private static <T> T tryCreateWithConstructor(Constructor<?> ctor,
-			Object... givenParams) throws RuntimeInvocationTargetException {
-		Parameter[] params = ctor.getParameters();
+	private static <T> T tryCreateWithConstructor(Constructor<?> ctor, Object... givenParams)
+			throws RuntimeInvocationTargetException {
+		Class<?>[] params = ctor.getParameterTypes();
 		Object[] actualParams = new Object[params.length];
 
 		int givenParamInd = 0;
 		for (int i = 0; i < params.length && givenParamInd < givenParams.length; ++i) {
-			if (!params[i].isImplicit() && !params[i].isSynthetic()) {
-				actualParams[i] = givenParams[givenParamInd++];
-			}
+			actualParams[i] = givenParams[givenParamInd++];
 		}
 
 		// more parameters were given than how many this constructor has
@@ -79,10 +73,8 @@ public final class InstanceCreator {
 			return (T) ctor.newInstance(actualParams);
 		} catch (InvocationTargetException e) {
 			// exception raised by the constructor
-			throw new RuntimeInvocationTargetException(
-					"Error while calling constructor", e);
-		} catch (IllegalArgumentException | InstantiationException
-				| IllegalAccessException e) {
+			throw new RuntimeInvocationTargetException("Error while calling constructor", e);
+		} catch (IllegalArgumentException | InstantiationException | IllegalAccessException e) {
 			// constructor is not applicable, null will be returned
 		}
 		return null;

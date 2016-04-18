@@ -19,10 +19,10 @@ import org.eclipse.uml2.uml.Model;
 import hu.elte.txtuml.export.uml2.transform.backend.ExportException;
 import hu.elte.txtuml.export.uml2.transform.backend.RuntimeExportException;
 import hu.elte.txtuml.export.uml2.transform.exporters.ModelExporter;
-import hu.elte.txtuml.utils.Sneaky;
 import hu.elte.txtuml.utils.eclipse.NotFoundException;
 import hu.elte.txtuml.utils.eclipse.PackageUtils;
 import hu.elte.txtuml.utils.eclipse.ProjectUtils;
+import hu.elte.txtuml.utils.eclipse.Sneaky;
 import hu.elte.txtuml.utils.jdt.ModelUtils;
 import hu.elte.txtuml.utils.jdt.SharedUtils;
 

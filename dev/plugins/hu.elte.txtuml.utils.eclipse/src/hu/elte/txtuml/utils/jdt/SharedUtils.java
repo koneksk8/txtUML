@@ -28,7 +28,7 @@ import org.eclipse.jdt.core.dom.PackageDeclaration;
 import org.eclipse.jdt.core.dom.SingleMemberAnnotation;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
-import hu.elte.txtuml.utils.Sneaky;
+import hu.elte.txtuml.utils.eclipse.Sneaky;
 
 public final class SharedUtils {
 

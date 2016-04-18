@@ -1,4 +1,4 @@
-package hu.elte.txtuml.utils;
+package hu.elte.txtuml.utils.eclipse;
 
 import java.util.function.Function;
 

@@ -10,8 +10,6 @@ import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaModelException;
 
-import hu.elte.txtuml.utils.Sneaky;
-
 public final class PackageUtils {
 
 	public static final String PACKAGE_INFO = "package-info.java";

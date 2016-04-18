@@ -32,7 +32,9 @@ public abstract class NotifierOfTermination {
 			return;
 		}
 		terminated = true;
-		list.forEach(Runnable::run);
+		for (Runnable r : list) {
+			r.run();
+		}
 		list.clear();
 	}
 
