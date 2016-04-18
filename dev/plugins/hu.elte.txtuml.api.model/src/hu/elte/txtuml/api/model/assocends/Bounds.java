@@ -27,16 +27,11 @@ public interface Bounds {
 	/**
 	 * Checks whether the given actual size conforms to the lower bound.
 	 */
-	default boolean checkLowerBound(int actualSize) {
-		return actualSize >= lowerBound();
-	}
+	boolean checkLowerBound(int actualSize);
 
 	/**
 	 * Checks whether the given actual size conforms to the upper bound.
 	 */
-	default boolean checkUpperBound(int actualSize) {
-		int bound = upperBound();
-		return bound == -1 || actualSize <= bound;
-	}
+	boolean checkUpperBound(int actualSize);
 
 }

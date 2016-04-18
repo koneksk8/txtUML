@@ -320,10 +320,13 @@ public abstract class ModelClass extends StateMachine {
 		}
 
 		private InvocationHandler createReceptionHandler() {
-			return (Object proxy, Method method, Object[] args) -> {
-				runtimeInfo().send((Signal) args[0]);
+			return new InvocationHandler() {
+				@Override
+				public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+					runtimeInfo().send((Signal) args[0]);
 
-				return null; // the actual method has to be void
+					return null; // the actual method has to be void
+				}
 			};
 		}
 
@@ -397,6 +400,9 @@ public abstract class ModelClass extends StateMachine {
 
 		protected InPort() {
 			super(new Interface.Empty() {
+				@Override
+				public void reception(Signal sig) {
+				}
 			});
 		}
 

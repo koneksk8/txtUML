@@ -2,7 +2,8 @@ package hu.elte.txtuml.api.model.runtime.collections;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.function.Predicate;
+
+import com.google.common.base.Predicate;
 
 import hu.elte.txtuml.api.model.Collection;
 
@@ -27,12 +28,8 @@ public abstract class AbstractCollection<T, B extends java.util.Collection<T>> i
 
 	@Override
 	public Iterator<T> iterator() {
-		Iterator<T> it = backend.iterator();
+		final Iterator<T> it = backend.iterator();
 		return new Iterator<T>() {
-			// Note: this implementation does not override (willingly) the
-			// 'remove' method which (by default) throws an
-			// UnsupportedOperationException.
-
 			@Override
 			public boolean hasNext() {
 				return it.hasNext();
@@ -41,6 +38,11 @@ public abstract class AbstractCollection<T, B extends java.util.Collection<T>> i
 			@Override
 			public T next() {
 				return it.next();
+			}
+
+			@Override
+			public void remove() {
+				throw new UnsupportedOperationException();
 			}
 		};
 	}
@@ -66,8 +68,45 @@ public abstract class AbstractCollection<T, B extends java.util.Collection<T>> i
 	}
 
 	@Override
-	public Collection<T> selectAll(Predicate<T> cond) {
-		return createBuilder().addAll(backend.stream().filter(cond).iterator()).build();
+	public Collection<T> selectAll(final Predicate<T> cond) {
+		Iterator<T> it = new Iterator<T>() {
+			private final Iterator<T> it = backend.iterator();
+			private T next = null;
+
+			{
+				step();
+			}
+
+			@Override
+			public boolean hasNext() {
+				return next != null;
+			}
+
+			@Override
+			public T next() {
+				T ret = next;
+				step();
+				return ret;
+			}
+
+			@Override
+			public void remove() {
+				throw new UnsupportedOperationException();
+			}
+
+			private void step() {
+				next = null;
+				while (it.hasNext()) {
+					T t = it.next();
+					if (cond.apply(t)) {
+						next = t;
+						return;
+					}
+				}
+			}
+		};
+
+		return createBuilder().addAll(it).build();
 	}
 
 	@Override

@@ -2,8 +2,8 @@ package hu.elte.txtuml.api.model;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.Spliterator;
-import java.util.function.Predicate;
+
+import com.google.common.base.Predicate;
 
 import hu.elte.txtuml.api.model.runtime.collections.Maybe;
 import hu.elte.txtuml.api.model.runtime.collections.Sequence;
@@ -47,9 +47,7 @@ public interface Collection<T> extends Iterable<T> {
 	 * @return <code>true</code> if this collection is empty; <code>false</code>
 	 *         otherwise
 	 */
-	default boolean isEmpty() {
-		return count() == 0;
-	}
+	boolean isEmpty();
 
 	/**
 	 * Returns the number of elements in this collection.
@@ -125,14 +123,6 @@ public interface Collection<T> extends Iterable<T> {
 	 * @return a new collection containing the desired elements
 	 */
 	Collection<T> remove(Object element);
-
-	/**
-	 * This method <b>must not be used in the model</b>.
-	 */
-	@Override
-	default Spliterator<T> spliterator() {
-		return Iterable.super.spliterator();
-	}
 
 	/**
 	 * A default implementation for an empty collection.

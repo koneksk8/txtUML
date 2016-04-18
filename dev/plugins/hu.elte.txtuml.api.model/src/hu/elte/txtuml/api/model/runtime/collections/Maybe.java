@@ -2,7 +2,8 @@ package hu.elte.txtuml.api.model.runtime.collections;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.function.Predicate;
+
+import com.google.common.base.Predicate;
 
 import hu.elte.txtuml.api.model.Collection;
 
@@ -74,6 +75,11 @@ public class Maybe<T> implements Collection<T> {
 	}
 
 	@Override
+	public boolean isEmpty() {
+		return count() == 0;
+	}
+	
+	@Override
 	public final int count() {
 		return this.obj == null ? 0 : 1;
 	}
@@ -90,7 +96,7 @@ public class Maybe<T> implements Collection<T> {
 
 	@Override
 	public final Collection<T> selectAll(Predicate<T> cond) {
-		if (obj == null || cond.test(obj)) {
+		if (obj == null || cond.apply(obj)) {
 			return this;
 		}
 		return new Collection.Empty<T>();

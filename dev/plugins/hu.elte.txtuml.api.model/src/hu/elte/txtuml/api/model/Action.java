@@ -243,6 +243,32 @@ public abstract class Action {
 	}
 
 	/**
+	 * Asynchronously sends the specified signal to the specified port instance.
+	 * <p>
+	 * <b>Example:</b>
+	 * <p>
+	 * 
+	 * <pre>
+	 * <code>
+	 * Action.send(new MySignal(), port(MyPort.class).required);
+	 * </code>
+	 * </pre>
+	 * 
+	 * @param signal
+	 *            the signal object to send
+	 * @throws NullPointerException
+	 *             if <code>reception</code> is <code>null</code>
+	 */
+	public static <S extends Signal> void send(S signal, final Interface ifc) {
+		Action.send(signal, new Reception<S>() {
+			@Override
+			public void accept(S signal) {
+				ifc.reception(signal);
+			}
+		});
+	}
+
+	/**
 	 * Asynchronously sends the specified signal to the specified target object.
 	 * <p>
 	 * Does not check whether the target object is deleted, it is only checked

@@ -21,20 +21,27 @@ import hu.elte.txtuml.api.model.error.MissingRuntimeContextError;
  */
 public interface BaseModelExecutor {
 
-	/**
-	 * Gets the current model executor which is associated with the current
-	 * thread.
-	 * <p>
-	 * <b>Note:</b> calls {@link Runtime#currentRuntime()}.
-	 * {@link Runtime#getExecutor getExecutor()}.
-	 * 
-	 * @return the model executor which is associated with the current thread
-	 * @throws MissingRuntimeContextError
-	 *             if the caller thread does not implement
-	 *             {@link RuntimeContext}
-	 */
-	static BaseModelExecutor currentExecutor() throws MissingRuntimeContextError {
-		return Runtime.currentRuntime().getExecutor();
+	abstract class Static {
+		
+		private Static() {
+		}
+		
+		/**
+		 * Gets the current model executor which is associated with the current
+		 * thread.
+		 * <p>
+		 * <b>Note:</b> calls {@link Runtime#currentRuntime()}.
+		 * {@link Runtime#getExecutor getExecutor()}.
+		 * 
+		 * @return the model executor which is associated with the current
+		 *         thread
+		 * @throws MissingRuntimeContextError
+		 *             if the caller thread does not implement
+		 *             {@link RuntimeContext}
+		 */
+		static BaseModelExecutor currentExecutor() throws MissingRuntimeContextError {
+			return Runtime.currentRuntime().getExecutor();
+		}
 	}
 
 	/**

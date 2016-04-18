@@ -18,7 +18,6 @@ package hu.elte.txtuml.api.model;
  * See the documentation of {@link Model} for an overview on modeling in
  * JtxtUML.
  */
-@FunctionalInterface
 public interface Reception<S extends Signal> {
 	void accept(S signal);
 }

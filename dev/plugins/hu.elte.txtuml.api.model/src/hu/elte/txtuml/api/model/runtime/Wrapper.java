@@ -19,9 +19,7 @@ public interface Wrapper<W> {
 	 * A shorthand operation for {@link #getWrapped()}. {@link Object#getClass()
 	 * getClass()}.
 	 */
-	default Class<?> getTypeOfWrapped() {
-		return getWrapped().getClass();
-	}
+	Class<?> getTypeOfWrapped();
 
 	/**
 	 * A wrapper should have a custom string representation based on the wrapped

@@ -75,6 +75,18 @@ public abstract class AssociationEnd<T extends ModelClass, C extends Collection<
 
 	public abstract C createEmptyCollection();
 
+	@Override
+	public boolean checkLowerBound(int actualSize) {
+		return actualSize >= lowerBound();
+	}
+
+	@Override
+	public boolean checkUpperBound(int actualSize) {
+		int bound = upperBound();
+		return bound == -1 || actualSize <= bound;
+	}
+
+	
 }
 
 abstract class MaybeEnd<T extends ModelClass> extends AssociationEnd<T, Maybe<T>> {

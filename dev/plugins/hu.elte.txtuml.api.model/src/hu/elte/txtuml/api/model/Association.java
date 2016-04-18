@@ -129,6 +129,16 @@ public abstract class Association {
 	public class Many<T extends ModelClass> extends ManyEnd<T>
 			implements Navigability.Navigable, Multiplicity.ZeroToUnlimited, ContainmentKind.SimpleEnd {
 
+		@Override
+		public int lowerBound() {
+			return 0;
+		}
+
+		@Override
+		public int upperBound() {
+			return -1;
+		}
+
 	}
 
 	/**
@@ -180,6 +190,16 @@ public abstract class Association {
 	 */
 	public abstract class Some<T extends ModelClass> extends ManyEnd<T>
 			implements Navigability.Navigable, Multiplicity.OneToUnlimited, ContainmentKind.SimpleEnd {
+
+		@Override
+		public int lowerBound() {
+			return 1;
+		}
+
+		@Override
+		public int upperBound() {
+			return -1;
+		}
 
 	}
 
@@ -233,6 +253,16 @@ public abstract class Association {
 	public abstract class MaybeOne<T extends ModelClass> extends MaybeEnd<T>
 			implements Navigability.Navigable, Multiplicity.ZeroToOne, ContainmentKind.SimpleEnd {
 
+		@Override
+		public int lowerBound() {
+			return 0;
+		}
+
+		@Override
+		public int upperBound() {
+			return 1;
+		}
+
 	}
 
 	/**
@@ -284,6 +314,16 @@ public abstract class Association {
 	 */
 	public abstract class One<T extends ModelClass> extends MaybeEnd<T>
 			implements Navigability.Navigable, Multiplicity.One, ContainmentKind.SimpleEnd {
+
+		@Override
+		public int lowerBound() {
+			return 1;
+		}
+
+		@Override
+		public int upperBound() {
+			return 1;
+		}
 
 	}
 
@@ -350,6 +390,17 @@ public abstract class Association {
 	public abstract class Multiple<T extends ModelClass> extends MultipleEnd<T>
 			implements Navigability.Navigable, Multiplicity.MinToMax, ContainmentKind.SimpleEnd {
 
+		@Override
+		public int lowerBound() {
+			Min min = getClass().getAnnotation(Min.class);
+			return min == null ? 0 : min.value();
+		}
+
+		@Override
+		public int upperBound() {
+			Max max = getClass().getAnnotation(Max.class);
+			return max == null ? -1 : max.value();
+		}
 	}
 
 	/**
@@ -402,6 +453,16 @@ public abstract class Association {
 	 */
 	public abstract class HiddenMany<T extends ModelClass> extends ManyEnd<T>
 			implements Navigability.NonNavigable, Multiplicity.ZeroToUnlimited, ContainmentKind.SimpleEnd {
+
+		@Override
+		public int lowerBound() {
+			return 0;
+		}
+
+		@Override
+		public int upperBound() {
+			return -1;
+		}
 
 	}
 
@@ -456,6 +517,16 @@ public abstract class Association {
 	public abstract class HiddenSome<T extends ModelClass> extends ManyEnd<T>
 			implements Navigability.NonNavigable, Multiplicity.OneToUnlimited, ContainmentKind.SimpleEnd {
 
+		@Override
+		public int lowerBound() {
+			return 1;
+		}
+
+		@Override
+		public int upperBound() {
+			return -1;
+		}
+
 	}
 
 	/**
@@ -509,6 +580,16 @@ public abstract class Association {
 	public abstract class HiddenMaybeOne<T extends ModelClass> extends MaybeEnd<T>
 			implements Navigability.NonNavigable, Multiplicity.ZeroToOne, ContainmentKind.SimpleEnd {
 
+		@Override
+		public int lowerBound() {
+			return 0;
+		}
+
+		@Override
+		public int upperBound() {
+			return 1;
+		}
+
 	}
 
 	/**
@@ -560,6 +641,16 @@ public abstract class Association {
 	 */
 	public abstract class HiddenOne<T extends ModelClass> extends MaybeEnd<T>
 			implements Navigability.NonNavigable, Multiplicity.One, ContainmentKind.SimpleEnd {
+
+		@Override
+		public int lowerBound() {
+			return 1;
+		}
+
+		@Override
+		public int upperBound() {
+			return 1;
+		}
 
 	}
 
@@ -613,6 +704,18 @@ public abstract class Association {
 	 */
 	public abstract class HiddenMultiple<T extends ModelClass> extends MultipleEnd<T>
 			implements Navigability.NonNavigable, Multiplicity.MinToMax, ContainmentKind.SimpleEnd {
+
+		@Override
+		public int lowerBound() {
+			Min min = getClass().getAnnotation(Min.class);
+			return min == null ? 0 : min.value();
+		}
+
+		@Override
+		public int upperBound() {
+			Max max = getClass().getAnnotation(Max.class);
+			return max == null ? -1 : max.value();
+		}
 
 	}
 }

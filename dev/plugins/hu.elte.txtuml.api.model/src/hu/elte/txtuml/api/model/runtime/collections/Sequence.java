@@ -2,6 +2,9 @@ package hu.elte.txtuml.api.model.runtime.collections;
 
 import java.util.ArrayList;
 
+import com.google.common.base.Function;
+import com.google.common.base.Supplier;
+
 import hu.elte.txtuml.api.model.Collection;
 
 /**
@@ -17,7 +20,17 @@ import hu.elte.txtuml.api.model.Collection;
 public class Sequence<T> extends AbstractCollection<T, ArrayList<T>> implements Collection<T> {
 
 	static <T> Builder<T, Sequence<T>> builder() {
-		return Builder.create(ArrayList::new, Sequence<T>::new);
+		return Builder.create(new Supplier<ArrayList<T>>() {
+			@Override
+			public ArrayList<T> get() {
+				return new ArrayList<>();
+			}
+		}, new Function<ArrayList<T>, Sequence<T>>() {
+			@Override
+			public Sequence<T> apply(ArrayList<T> input) {
+				return new Sequence<T>(input);
+			}
+		});
 	}
 
 	/**
@@ -36,11 +49,16 @@ public class Sequence<T> extends AbstractCollection<T, ArrayList<T>> implements 
 	}
 
 	private Sequence() {
-		super(new ArrayList<>());
+		super(new ArrayList<T>());
 	}
 
 	private Sequence(ArrayList<T> backend) {
 		super(backend);
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return count() == 0;
 	}
 
 	@Override

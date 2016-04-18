@@ -98,4 +98,6 @@ public interface Interface {
 	public interface Empty extends Interface {
 	}
 
+	void reception(Signal sig);
+	
 }
