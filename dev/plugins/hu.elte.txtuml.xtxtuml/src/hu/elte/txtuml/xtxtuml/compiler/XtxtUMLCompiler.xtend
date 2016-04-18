@@ -49,14 +49,18 @@ class XtxtUMLCompiler extends XbaseCompiler {
 	def dispatch toJavaStatement(RAlfSendSignalExpression sendExpr, ITreeAppendable it) {
 		newLine;
 		append(Action)
-		append(".send(");
+		if (sendExpr.target.lightweightType.isSubtypeOf(Port)) {
+			append(".sendToPort(");
+		} else {
+			append(".send(");			
+		}
 
 		sendExpr.signal.internalToJavaExpression(it);
 		append(", ");
 
 		sendExpr.target.internalToJavaExpression(it);
 		if (sendExpr.target.lightweightType.isSubtypeOf(Port)) {
-			append(".required::reception");
+			append(".required");
 		}
 
 		append(");");
