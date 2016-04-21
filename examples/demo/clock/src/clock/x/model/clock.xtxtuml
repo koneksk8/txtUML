@@ -191,7 +191,7 @@ class Pendulum {
 		from Init;
 		to Working;
 		effect {
-			timer = Timer.start(this, new Tick(), unit);
+			timer = Timer.Static.start(this, new Tick(), unit);
 		}
 	}
 

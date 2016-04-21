@@ -25,7 +25,7 @@ public class Pendulum extends ModelClass {
 	@From(Init.class) @To(Working.class)
 	class Initialize extends Transition {
 		public void effect() {
-			timer = Timer.start(Pendulum.this, new Tick(), unit);
+			timer = Timer.Static.start(Pendulum.this, new Tick(), unit);
 		}
 	}
 	

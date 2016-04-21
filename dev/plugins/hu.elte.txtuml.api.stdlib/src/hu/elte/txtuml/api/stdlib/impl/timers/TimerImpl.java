@@ -25,10 +25,13 @@ public class TimerImpl implements Timer {
 	 * @param millisecs
 	 *            millisecs to wait before the timeout
 	 */
-	public TimerImpl(ModelClass targetObj, Signal signal, int millisecs) {
-		this.action = () -> {
-			Action.send(signal, targetObj);
-			return null;
+	public TimerImpl(final ModelClass targetObj, final Signal signal, final int millisecs) {
+		this.action = new Callable<Void>() {
+			@Override
+			public Void call() throws Exception {
+				Action.send(signal, targetObj);
+				return null;
+			}
 		};
 		schedule(millisecs);
 	}

@@ -54,7 +54,7 @@ public class Keyboard extends ModelClass {
 		@Override
 		public void effect() {
 			keyboardTimerCount += 0;
-			keyboardTimer = Timer.start(Keyboard.this, new KeyboardTimerExpired(), 50);
+			keyboardTimer = Timer.Static.start(Keyboard.this, new KeyboardTimerExpired(), 50);
 		}
 	}
 

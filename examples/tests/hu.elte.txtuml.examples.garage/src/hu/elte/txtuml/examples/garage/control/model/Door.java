@@ -46,7 +46,7 @@ public class Door extends ModelClass {
 	public class TDisable extends Transition {
 		@Override
 		public void effect() {
-			doorTimer = Timer.start(Door.this, new DoorTimerExpired(), 2000);
+			doorTimer = Timer.Static.start(Door.this, new DoorTimerExpired(), 2000);
 		}
 	}
 

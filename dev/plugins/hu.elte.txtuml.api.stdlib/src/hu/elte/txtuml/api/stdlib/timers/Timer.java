@@ -9,7 +9,7 @@ import hu.elte.txtuml.api.stdlib.impl.timers.TimerImpl;
  * An external class which enhances the txtUML models with the ability of using
  * timed events.
  * <p>
- * By calling the {@link #start(ModelClass, Signal, int)} method, a new delayed
+ * By calling the {@link Static#start(ModelClass, Signal, int)} method, a new delayed
  * send operation can be started, which means that a signal will be
  * asynchronously sent to the a target model object after a specified timeout.
  * <p>
@@ -18,21 +18,27 @@ import hu.elte.txtuml.api.stdlib.impl.timers.TimerImpl;
  */
 public interface Timer extends ExternalClass {
 
-	/**
-	 * Starts a new delayed send operation. Sends asynchronously a signal to the
-	 * target model object after a specified timeout.
-	 * 
-	 * @param targetObj
-	 *            the target model object of the delayed send operation
-	 * @param signal
-	 *            the signal which is to be sent after the delay
-	 * @param millisecs
-	 *            the time in millisecs to wait before sending the signal
-	 * @return a timer instance to manage this delayed send operation before it
-	 *         happens
-	 */
-	static Timer start(ModelClass targetObj, Signal signal, int millisecs) {
-		return new TimerImpl(targetObj, signal, millisecs);
+	abstract class Static {
+
+		private Static() {
+		}
+
+		/**
+		 * Starts a new delayed send operation. Sends asynchronously a signal to
+		 * the target model object after a specified timeout.
+		 * 
+		 * @param targetObj
+		 *            the target model object of the delayed send operation
+		 * @param signal
+		 *            the signal which is to be sent after the delay
+		 * @param millisecs
+		 *            the time in millisecs to wait before sending the signal
+		 * @return a timer instance to manage this delayed send operation before
+		 *         it happens
+		 */
+		public static Timer start(ModelClass targetObj, Signal signal, int millisecs) {
+			return new TimerImpl(targetObj, signal, millisecs);
+		}
 	}
 
 	/**
