@@ -190,6 +190,13 @@ public abstract class AbstractModelClassWrapper extends AbstractSignalTargetWrap
 					x.lostSignalAtObject(signal, getWrapped());
 				}
 			});
+		} else {
+			getRuntime().error(new Consumer<ErrorListener>() {
+				@Override
+				public void accept(ErrorListener x) {
+					x.missingInitialTransition(currentVertex.getWrapped());
+				}
+			});
 		}
 
 	}
@@ -470,16 +477,14 @@ public abstract class AbstractModelClassWrapper extends AbstractSignalTargetWrap
 	 * the objects in association with the wrapped ModelClass instance and being
 	 * on the specified opposite association end.
 	 */
-	public abstract <T extends ModelClass> boolean hasAssoc(
-			Class<? extends AssociationEnd<T, ?>> otherEnd, T object);
+	public abstract <T extends ModelClass> boolean hasAssoc(Class<? extends AssociationEnd<T, ?>> otherEnd, T object);
 
 	/**
 	 * Adds the specified object to the collection containing the objects in
 	 * association with the wrapped ModelClass instance and being on the
 	 * specified opposite association end.
 	 */
-	public abstract <T extends ModelClass> void addToAssoc(
-			Class<? extends AssociationEnd<T, ?>> otherEnd, T object)
+	public abstract <T extends ModelClass> void addToAssoc(Class<? extends AssociationEnd<T, ?>> otherEnd, T object)
 			throws MultiplicityException, MultipleContainerException;
 
 	/**
@@ -487,8 +492,8 @@ public abstract class AbstractModelClassWrapper extends AbstractSignalTargetWrap
 	 * in association with the wrapped ModelClass instance and being on the
 	 * specified opposite association end.
 	 */
-	public abstract <T extends ModelClass> void removeFromAssoc(
-			Class<? extends AssociationEnd<T, ?>> otherEnd, T object);
+	public abstract <T extends ModelClass> void removeFromAssoc(Class<? extends AssociationEnd<T, ?>> otherEnd,
+			T object);
 
 	@Override
 	public abstract void delete();

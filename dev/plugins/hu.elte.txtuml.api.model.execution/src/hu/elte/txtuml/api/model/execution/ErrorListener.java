@@ -32,6 +32,8 @@ public interface ErrorListener {
 
 	void noTransitionFromChoice(Vertex choice);
 
+	void missingInitialTransition(Vertex fromInitial);
+
 	void elseGuardFromNonChoiceVertex(Transition transition);
 
 	void multipleContainerForAnObject(ModelClass obj, Class<? extends AssociationEnd<?, ?>> assocEnd);
