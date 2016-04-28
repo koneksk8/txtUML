@@ -90,9 +90,9 @@ class XtxtUMLCompiler extends XbaseCompiler {
 	}
 
 	def dispatch toJavaExpression(RAlfSignalAccessExpression sigExpr, ITreeAppendable it) {
-		append("((");
+		append("getTrigger(");
 		append(sigExpr.lightweightType);
-		append(") getSignal())");
+		append(".class)");
 	}
 
 }
