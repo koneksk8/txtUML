@@ -8,6 +8,7 @@ import hu.elte.txtuml.api.model.Composition.Container
 import hu.elte.txtuml.api.model.Composition.HiddenContainer
 import hu.elte.txtuml.api.model.Connector
 import hu.elte.txtuml.api.model.ConnectorBase.One
+import hu.elte.txtuml.api.model.DataType
 import hu.elte.txtuml.api.model.Delegation
 import hu.elte.txtuml.api.model.From
 import hu.elte.txtuml.api.model.Interface
@@ -28,6 +29,7 @@ import hu.elte.txtuml.xtxtuml.xtxtUML.TUComposition
 import hu.elte.txtuml.xtxtuml.xtxtUML.TUConnector
 import hu.elte.txtuml.xtxtuml.xtxtUML.TUConnectorEnd
 import hu.elte.txtuml.xtxtuml.xtxtUML.TUConstructor
+import hu.elte.txtuml.xtxtuml.xtxtUML.TUDataType
 import hu.elte.txtuml.xtxtuml.xtxtUML.TUEntryOrExitActivity
 import hu.elte.txtuml.xtxtuml.xtxtUML.TUExecution
 import hu.elte.txtuml.xtxtuml.xtxtUML.TUInterface
@@ -153,6 +155,38 @@ class XtxtUMLJvmModelInferrer extends AbstractModelInferrer {
 				register(member, acceptor, isPreIndexingPhase)
 			}
 		}
+	}
+
+
+	def dispatch void infer(TUDataType dataType, IJvmDeclaredTypeAcceptor acceptor, boolean isPreIndexingPhase) {
+		acceptor.accept(dataType.toClass(dataType.fullyQualifiedName)) [
+			documentation = dataType.documentation
+			superTypes += DataType.typeRef
+
+			for (attr : dataType.attributes) {
+				members += attr.toJvmMember
+			}
+
+			if (!dataType.attributes.isEmpty) {
+				members += dataType.toConstructor [
+					for (attr : dataType.attributes) {
+						parameters += attr.toParameter(attr.name, attr.type)
+					}
+
+					body = '''
+						«FOR attr : dataType.attributes»
+							this.«attr.name» = «attr.name»;
+						«ENDFOR»
+					'''
+				]
+			}
+			for (operation : dataType.operations) {
+				if (!(operation instanceof TUAttributeOrOperationDeclarationPrefix)) { // TODO refactor grammar
+					members += operation.toJvmMember
+				}
+			}
+			
+		]
 	}
 
 	def dispatch void infer(TUConnector connector, IJvmDeclaredTypeAcceptor acceptor, boolean isPreIndexingPhase) {
@@ -282,6 +316,7 @@ class XtxtUMLJvmModelInferrer extends AbstractModelInferrer {
 		attr.toField(attr.name, attr.type) [
 			documentation = attr.documentation
 			visibility = attr.visibility.toJvmVisibility
+			final = true
 		]
 	}
 

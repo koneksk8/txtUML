@@ -26,6 +26,7 @@ TUModelElement
 	: TUExecution
 	| TUSignal
 	| TUClass
+	| TUDataType
 	| TUAssociation
 	| TUInterface
 	| TUConnector
@@ -46,6 +47,13 @@ TUClass :
 	'class' name=ValidID ('extends' superClass=[TUClass|QualifiedName])? ('{'
 		members+=TUClassMember*
 	'}' ';'? | ';')
+;
+
+TUDataType :
+	'data-type' name=ValidID ('{'
+		attributes+=TUSignalAttribute*
+		operations+=TUDataTypeOperation*
+	'}' ';'? | ';' )
 ;
 
 TUAssociation returns TUAssociation:
@@ -83,6 +91,11 @@ TUConnectorEnd :
  */
 TUSignalAttribute :
 	visibility=TUVisibility? type=JvmTypeReference name=ValidID ';'
+;
+
+TUDataTypeOperation :
+	TUAttributeOrOperationDeclarationPrefix
+	{TUOperation.prefix=current} name=ValidID '(' (parameters+=FullJvmFormalParameter (',' parameters+=FullJvmFormalParameter)*)? ')' body=XBlockExpression ';'?
 ;
 
 /*

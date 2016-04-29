@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.SimpleType;
 import hu.elte.txtuml.utils.jdt.ElementTypeTeller;
 import hu.elte.txtuml.validation.ProblemCollector;
 import hu.elte.txtuml.validation.problems.datatype.InvalidDataTypeField;
-import hu.elte.txtuml.validation.problems.datatype.InvalidDataTypeMethod;
 import hu.elte.txtuml.validation.problems.datatype.MutableDataTypeField;
 
 public class DataTypeVisitor extends VisitorBase {
@@ -36,9 +35,6 @@ public class DataTypeVisitor extends VisitorBase {
 
 	@Override
 	public boolean visit(MethodDeclaration node) {
-		if (!node.isConstructor()) {
-			collector.report(new InvalidDataTypeMethod(collector.getSourceInfo(), node));
-		}
 		// TODO: check body
 		return false;
 	}
