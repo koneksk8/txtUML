@@ -36,6 +36,7 @@ import org.eclipse.xtext.validation.Check
 
 import static hu.elte.txtuml.xtxtuml.validation.XtxtUMLIssueCodes.*
 import static hu.elte.txtuml.xtxtuml.xtxtUML.XtxtUMLPackage.Literals.*
+import hu.elte.txtuml.xtxtuml.xtxtUML.TUDataType
 
 class XtxtUMLUniquenessValidator extends AbstractXtxtUMLValidator {
 
@@ -71,12 +72,22 @@ class XtxtUMLUniquenessValidator extends AbstractXtxtUMLValidator {
 	 */
 	@Check
 	def checkSignalAttributeNameIsUnique(TUSignalAttribute attribute) {
-		val containingSignal = attribute.eContainer as TUSignal;
-		if (containingSignal.attributes.exists [
-			name == attribute.name && it != attribute // direct comparison is safe here
-		]) {
-			error("Duplicate attribute " + attribute.name + " in signal " + containingSignal.name, attribute,
-				TU_SIGNAL_ATTRIBUTE__NAME, NOT_UNIQUE_NAME);
+		try {
+			val containingSignal = attribute.eContainer as TUSignal;
+			if (containingSignal.attributes.exists [
+				name == attribute.name && it != attribute // direct comparison is safe here
+			]) {
+				error("Duplicate attribute " + attribute.name + " in signal " + containingSignal.name, attribute,
+					TU_SIGNAL_ATTRIBUTE__NAME, NOT_UNIQUE_NAME);
+			}
+		} catch (ClassCastException e) {
+			val containingDataType = attribute.eContainer as TUDataType;
+			if (containingDataType.attributes.exists [
+				name == attribute.name && it != attribute // direct comparison is safe here
+			]) {
+				error("Duplicate attribute " + attribute.name + " in data type " + containingDataType.name, attribute,
+					TU_SIGNAL_ATTRIBUTE__NAME, NOT_UNIQUE_NAME);
+			}
 		}
 	}
 
@@ -107,17 +118,32 @@ class XtxtUMLUniquenessValidator extends AbstractXtxtUMLValidator {
 
 	@Check
 	def checkOperationIsUnique(TUOperation operation) {
-		val containingClass = (operation.eContainer as TUClass);
-		if (containingClass.members.exists [
-			it instanceof TUOperation &&
-				{
-					val siblingOperationOrSelf = it as TUOperation;
-					siblingOperationOrSelf.name == operation.name &&
-						siblingOperationOrSelf.parameters.typeNames == operation.parameters.typeNames
-				} && it != operation // direct comparison is safe here
-		]) {
-			error('''Duplicate operation «operation.name»(«operation.parameters.typeNames.join(", ")») in class «containingClass.name»''',
-				operation, TU_OPERATION__NAME, NOT_UNIQUE_OPERATION);
+		try {
+			val containingClass = (operation.eContainer as TUClass);
+			if (containingClass.members.exists [
+				it instanceof TUOperation &&
+					{
+						val siblingOperationOrSelf = it as TUOperation;
+						siblingOperationOrSelf.name == operation.name &&
+							siblingOperationOrSelf.parameters.typeNames == operation.parameters.typeNames
+					} && it != operation // direct comparison is safe here
+			]) {
+				error('''Duplicate operation «operation.name»(«operation.parameters.typeNames.join(", ")») in class «containingClass.name»''',
+					operation, TU_OPERATION__NAME, NOT_UNIQUE_OPERATION);
+			}
+		} catch (ClassCastException e) {
+			val containingDataType = (operation.eContainer as TUDataType);
+			if (containingDataType.operations.exists [
+				it instanceof TUOperation &&
+					{
+						val siblingOperationOrSelf = it as TUOperation;
+						siblingOperationOrSelf.name == operation.name &&
+							siblingOperationOrSelf.parameters.typeNames == operation.parameters.typeNames
+					} && it != operation // direct comparison is safe here
+			]) {
+				error('''Duplicate operation «operation.name»(«operation.parameters.typeNames.join(", ")») in data type «containingDataType.name»''',
+					operation, TU_OPERATION__NAME, NOT_UNIQUE_OPERATION);
+			}
 		}
 	}
 

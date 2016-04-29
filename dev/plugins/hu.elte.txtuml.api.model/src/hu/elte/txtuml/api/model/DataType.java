@@ -14,6 +14,10 @@ package hu.elte.txtuml.api.model;
  * between subclasses of <code>DataType</code> will represent extending data
  * types in the model. That means, due to the restrictions of Java, each data
  * type can extend at most one data type.
+ * <p>
+ * Data types are value types, their instances have no identity, therefore their
+ * representing classes in Java must be immutable (all of their fields must be
+ * {code final}).
  * 
  * <p>
  * <b>Java restrictions:</b>
@@ -38,7 +42,7 @@ package hu.elte.txtuml.api.model;
  * <li><i>Fields:</i> allowed, must be final, only of types which are subclasses
  * of <code>DataType</code> or primitives (including {@code String}); they
  * represent attributes of the data type</li>
- * <li><i>Methods:</i> disallowed</li>
+ * <li><i>Methods:</i> allowed</li>
  * <li><i>Nested interfaces:</i> disallowed</li>
  * <li><i>Nested classes:</i> disallowed</li>
  * <li><i>Nested enums:</i> disallowed</li>
