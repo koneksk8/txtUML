@@ -17,6 +17,7 @@ import org.eclipse.jdt.core.dom.TypeDeclaration;
 
 import hu.elte.txtuml.api.model.Association;
 import hu.elte.txtuml.api.model.AssociationEnd;
+import hu.elte.txtuml.api.model.Collection;
 import hu.elte.txtuml.api.model.Composition;
 import hu.elte.txtuml.api.model.ConnectorBase;
 import hu.elte.txtuml.api.model.DataType;
@@ -219,6 +220,10 @@ public final class ElementTypeTeller {
 
 	public static boolean isConnector(TypeDeclaration typeDeclaration) {
 		return SharedUtils.typeIsAssignableFrom(typeDeclaration, ConnectorBase.class);
+	}
+
+	public static boolean isCollection(ITypeBinding type) {
+		return SharedUtils.typeIsAssignableFrom(type, Collection.class);
 	}
 
 	public static boolean isSpecificClassifier(TypeDeclaration classifierDeclaration) {

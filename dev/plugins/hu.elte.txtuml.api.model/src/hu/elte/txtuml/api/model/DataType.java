@@ -79,4 +79,6 @@ package hu.elte.txtuml.api.model;
  */
 public abstract class DataType {
 
+	// FIXME hashCode, equals
+		
 }
