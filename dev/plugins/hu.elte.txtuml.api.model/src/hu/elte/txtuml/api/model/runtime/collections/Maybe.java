@@ -99,13 +99,13 @@ public class Maybe<T> implements Collection<T> {
 		if (obj == null || cond.apply(obj)) {
 			return this;
 		}
-		return new Collection.Empty<T>();
+		return Maybe.empty();
 	}
 
 	@Override
 	public final Collection<T> add(T element) {
 		if (obj == null) {
-			return new Maybe<T>(element);
+			return Maybe.of(element);
 		}
 		return Sequence.<T> builder().add(obj).add(element).build();
 	}
@@ -120,7 +120,7 @@ public class Maybe<T> implements Collection<T> {
 		if (element == null || !element.equals(this.obj)) {
 			return this;
 		}
-		return new Empty<T>();
+		return Maybe.empty();
 	}
 
 	@Override

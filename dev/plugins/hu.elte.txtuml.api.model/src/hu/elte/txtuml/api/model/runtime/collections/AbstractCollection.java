@@ -1,7 +1,6 @@
 package hu.elte.txtuml.api.model.runtime.collections;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 import com.google.common.base.Predicate;
 
@@ -58,12 +57,12 @@ public abstract class AbstractCollection<T, B extends java.util.Collection<T>> i
 	}
 
 	@Override
-	public T selectAny() throws NoSuchElementException {
+	public T selectAny() {
 		Iterator<T> it = backend.iterator();
 		if (it.hasNext()) {
 			return it.next();
 		} else {
-			throw new NoSuchElementException();
+			return null;
 		}
 	}
 

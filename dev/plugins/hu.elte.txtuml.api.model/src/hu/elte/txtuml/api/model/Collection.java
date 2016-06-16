@@ -71,12 +71,11 @@ public interface Collection<T> extends Iterable<T> {
 	 * order is guaranteed, this method is allowed to return the same object
 	 * each time it is called on the same collection.
 	 * 
-	 * @throws NoSuchElementException
 	 *             if this collection is empty
 	 * @return an element of this collection, <code>null</code> if the
 	 *         collection is empty
 	 */
-	T selectAny() throws NoSuchElementException;
+	T selectAny();
 
 	/**
 	 * Selects all elements of this collection for which the specified condition
@@ -180,8 +179,8 @@ public interface Collection<T> extends Iterable<T> {
 		}
 
 		@Override
-		public T selectAny() throws NoSuchElementException {
-			throw new NoSuchElementException();
+		public T selectAny() {
+			return null;
 		}
 
 		@Override

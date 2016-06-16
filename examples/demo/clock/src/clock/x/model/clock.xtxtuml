@@ -1,6 +1,14 @@
 package clock.x.model;
 
-import hu.elte.txtuml.api.stdlib.timers.Timer
+import clock.x.model.Display.Accepting;
+import clock.x.model.Display.HourPort;
+import clock.x.model.Display.Init;
+import clock.x.model.Display.MinutePort;
+import clock.x.model.Display.SecondPort;
+import clock.x.model.Hand.OutTickPort;
+import clock.x.model.Hand.ValuePort;
+import clock.x.model.Hand.Working;
+import hu.elte.txtuml.api.stdlib.timers.Timer;
 
 // Classes
 
@@ -145,7 +153,7 @@ class Hand {
 	state Working;
 
 	transition Initialize {
-		from Init;
+		from clock.x.model.Hand.Init;
 		to Working;
 	}
 
@@ -183,21 +191,21 @@ class Pendulum {
 	initial Init;
 	state Working {
 		entry {
-			send new Tick() to this->(OutTickPort);
+			send new Tick() to this->(clock.x.model.Pendulum.OutTickPort);
 		}
 	}
 
 	transition Initialize {
-		from Init;
-		to Working;
+		from clock.x.model.Pendulum.Init;
+		to clock.x.model.Pendulum.Working;
 		effect {
 			timer = Timer.Static.start(this, new Tick(), unit);
 		}
 	}
 
 	transition DoTick {
-		from Working;
-		to Working;
+		from clock.x.model.Pendulum.Working;
+		to clock.x.model.Pendulum.Working;
 		trigger Tick;
 		effect {
 			timer.reset(unit);
