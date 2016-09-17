@@ -1,0 +1,574 @@
+package hp.model;
+
+signal Locomotor;
+signal Disaudio;
+signal Stupor;
+signal Levicorpus;
+signal Diffindo;
+signal Capitulatus;
+signal Invito;
+signal Protego;
+signal Expecto_Patronum;
+signal Silencio;
+
+
+class MagicBox {
+
+public void init(Box box, Sound sound) {
+	link(MagicBox_Box.magicBox, this, MagicBox_Box.box, box);
+	link(MagicBox_Sound.magicBox, this, MagicBox_Sound.sound, sound);
+}
+
+initial Init;
+
+transition O{
+	from Init;
+	to Privet_Drive;
+}
+
+// states
+
+state Privet_Drive {
+	entry {
+		this->(MagicBox_Box.box).selectAny().set0();
+	}
+} // 0
+
+state Gyengelkedo {
+	entry {
+		this->(MagicBox_Box.box).selectAny().set0();
+	}
+} // 0
+
+state Godrics_Hollow {
+	entry {
+		this->(MagicBox_Box.box).selectAny().set1();
+	}
+} // 1
+	
+state Kings_Cross {
+	entry {
+		this->(MagicBox_Box.box).selectAny().set1();
+	}
+} // 1
+	
+state Abszol_ut {
+	entry {
+		this->(MagicBox_Box.box).selectAny().set2();
+	}
+} // 2
+
+state Azkaban {
+	entry {
+		this->(MagicBox_Box.box).selectAny().set2();
+	}
+} // 2
+
+state Gringotts {
+	entry {
+		this->(MagicBox_Box.box).selectAny().set3();
+	}
+} // 3
+
+state Hagrid_kunyhoja {
+	entry {
+		this->(MagicBox_Box.box).selectAny().set3();
+	}
+} // 3
+
+state Roxfort_express {
+	entry {
+		this->(MagicBox_Box.box).selectAny().set4();
+	}
+} // 4
+
+state Piton_szobaja {
+	entry {
+		this->(MagicBox_Box.box).selectAny().set4();
+	}
+} // 4
+
+state Roxfort {
+	entry {
+		this->(MagicBox_Box.box).selectAny().set5();
+	}
+} // 5
+
+state Tiltott_rengeteg {
+	entry {
+		this->(MagicBox_Box.box).selectAny().set6();
+	}
+} // 6
+
+state Harom_sepru {
+	entry {
+		this->(MagicBox_Box.box).selectAny().set7();
+	}
+} // 7
+
+state Odu {
+	entry {
+		this->(MagicBox_Box.box).selectAny().set7();
+	}
+} // 7
+
+state Titkok_kamraja {
+	entry {
+		this->(MagicBox_Box.box).selectAny().set8();
+	}
+} // 8
+
+state Magiaugyi_Miniszterium {
+	entry {
+		this->(MagicBox_Box.box).selectAny().set8();
+	}
+} // 8
+
+state Kviddics_palya {
+	entry {
+		this->(MagicBox_Box.box).selectAny().set9();
+	}
+} // 9
+
+state Cel {
+	entry {
+		this->(MagicBox_Sound.sound).selectAny().Tadaa();
+		this->(MagicBox_Box.box).selectAny().set9();
+	}
+}
+
+// transitions
+
+transition Capitulatus_PrGo {
+	from Privet_Drive;
+	to Godrics_Hollow;
+	trigger Capitulatus;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Capitulatus();
+	}
+}
+
+transition Stupor_PrKi {
+	from Privet_Drive;
+	to Kings_Cross;
+	trigger Stupor;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Stupor();
+	}
+}
+
+transition Diffindo_GoPr {
+	from Godrics_Hollow;
+	to Privet_Drive;
+	trigger Diffindo;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Diffindo();
+	}
+}
+
+transition Stupor_GoAb {
+	from Godrics_Hollow;
+	to Abszol_ut;
+	trigger Stupor;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Stupor();
+	}
+}
+
+transition Levicorpus_KiPr {
+	from Kings_Cross;
+	to Privet_Drive;
+	trigger Levicorpus;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Levicorpus();
+	}
+}
+
+transition Invito_KiGy {
+	from Kings_Cross;
+	to Gyengelkedo;
+	trigger Invito;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Invito();
+	}
+}
+
+transition Capitulatus_KiAb {
+	from Kings_Cross;
+	to Abszol_ut;
+	trigger Capitulatus;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Capitulatus();
+	}
+}
+
+transition Locomotor_GyPr {
+	from Gyengelkedo;
+	to Privet_Drive;
+	trigger Locomotor;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Locomotor();
+	}
+}
+
+transition Disaudio_GyKi {
+	from Gyengelkedo;
+	to Kings_Cross;
+	trigger Disaudio;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Disaudio();
+	}
+}
+
+transition Disaudio_AbKi {
+	from Abszol_ut;
+	to Kings_Cross;
+	trigger Disaudio;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Disaudio();
+	}
+}
+
+transition Stupor_AbGy {
+	from Abszol_ut;
+	to Gyengelkedo;
+	trigger Stupor;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Stupor();
+	}
+}
+
+transition Diffindo_AbGr {
+	from Abszol_ut;
+	to Gringotts;
+	trigger Diffindo;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Diffindo();
+	}
+}
+
+transition Protego_AzGy {
+	from Azkaban;
+	to Gyengelkedo;
+	trigger Protego;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Protego();
+	}
+}
+
+transition ExpectoPatronum_AzGr {
+	from Azkaban;
+	to Gringotts;
+	trigger Expecto_Patronum;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Expecto_Patronum();
+	}
+}
+
+transition Silencio_GrGo {
+	from Gringotts;
+	to Godrics_Hollow;
+	trigger Silencio;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Silencio();
+	}
+}
+
+transition ExpectoPatronum_GrAz {
+	from Gringotts;
+	to Azkaban;
+	trigger Expecto_Patronum;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Expecto_Patronum();
+	}
+}
+
+transition Disaudio_GrRoE {
+	from Gringotts;
+	to Roxfort_express;
+	trigger Disaudio;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Disaudio();
+	}
+}
+
+transition Invito_RoEGr {
+	from Roxfort_express;
+	to Gringotts;
+	trigger Invito;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Invito();
+	}
+}
+
+transition Stuport_RoEHa {
+	from Roxfort_express;
+	to Hagrid_kunyhoja;
+	trigger Stupor;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Stupor();
+	}
+}
+
+transition Locomotor_RoERo {
+	from Roxfort_express;
+	to Roxfort;
+	trigger Locomotor;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Locomotor();
+	}
+}
+
+transition Silencio_RoEAz {
+	from Roxfort_express;
+	to Azkaban;
+	trigger Silencio;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Silencio();
+	}
+}
+
+transition Invito_RoTi {
+	from Roxfort;
+	to Tiltott_rengeteg;
+	trigger Invito;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Invito();
+	}
+}
+
+transition Locomotor_RoRoE {
+	from Roxfort;
+	to Roxfort_express;
+	trigger Locomotor;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Locomotor();
+	}
+}
+
+transition Diffindo_RoHa {
+	from Roxfort;
+	to Hagrid_kunyhoja;
+	trigger Diffindo;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Diffindo();
+	}
+}
+
+transition Capitulatus_HaRoE {
+	from Hagrid_kunyhoja;
+	to Roxfort_express;
+	trigger Capitulatus;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Capitulatus();
+	}
+}
+
+transition Levicorpus_HaAz {
+	from Hagrid_kunyhoja;
+	to Azkaban;
+	trigger Levicorpus;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Levicorpus();
+	}
+}
+
+transition Capitulatus_PiHa {
+	from Piton_szobaja;
+	to Hagrid_kunyhoja;
+	trigger Capitulatus;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Capitulatus();
+	}
+}
+
+transition ExpectoPatronum_PiRo {
+	from Piton_szobaja;
+	to Roxfort;
+	trigger Expecto_Patronum;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Expecto_Patronum();
+	}
+}
+
+transition Disaudio_HaPi {
+	from Harom_sepru;
+	to Piton_szobaja;
+	trigger Disaudio;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Disaudio();
+	}
+}
+
+transition Levicorpus_HaTi {
+	from Harom_sepru;
+	to Tiltott_rengeteg;
+	trigger Levicorpus;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Levicorpus();
+	}
+}
+
+transition Protego_HaTi {
+	from Harom_sepru;
+	to Titkok_kamraja;
+	trigger Protego;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Protego();
+	}
+}
+
+transition Locomotor_TiPi {
+	from Titkok_kamraja;
+	to Piton_szobaja;
+	trigger Locomotor;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Locomotor();
+	}
+}
+
+transition Diffindo_TiTi {
+	from Titkok_kamraja;
+	to Tiltott_rengeteg;
+	trigger Diffindo;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Diffindo();
+	}
+}
+
+transition ExpectoPatronum_TiKv {
+	from Titkok_kamraja;
+	to Kviddics_palya;
+	trigger Expecto_Patronum;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Expecto_Patronum();
+	}
+}
+
+transition Levicorpus_TiHa {
+	from Tiltott_rengeteg;
+	to Harom_sepru;
+	trigger Levicorpus;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Levicorpus();
+	}
+}
+
+transition Capitulatus_TiRoE {
+	from Tiltott_rengeteg;
+	to Roxfort_express;
+	trigger Capitulatus;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Capitulatus();
+	}
+}
+
+transition ExpectoPatronum_TiOd {
+	from Tiltott_rengeteg;
+	to Odu;
+	trigger Expecto_Patronum;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Expecto_Patronum();
+	}
+}
+
+transition ExpectoPatronum_OdRo {
+	from Odu;
+	to Roxfort;
+	trigger Expecto_Patronum;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Expecto_Patronum();
+	}
+}
+
+transition Protego_OdMa {
+	from Odu;
+	to Magiaugyi_Miniszterium;
+	trigger Protego;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Protego();
+	}
+}
+
+transition Stupor_MaOd {
+	from Magiaugyi_Miniszterium;
+	to Odu;
+	trigger Stupor;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Stupor();
+	}
+}
+
+transition Levicorpus_MaKv {
+	from Magiaugyi_Miniszterium;
+	to Kviddics_palya;
+	trigger Levicorpus;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Levicorpus();
+	}
+}
+
+
+transition Silencio_KvCe {
+	from Kviddics_palya;
+	to Cel;
+	trigger Silencio;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Silencio();
+	}
+}
+
+transition Disaudio_KvPi {
+	from Kviddics_palya;
+	to Piton_szobaja;
+	trigger Disaudio;
+	effect {
+		this->(MagicBox_Sound.sound).selectAny().Disaudio();
+	}
+}
+
+}
+
+
+
+class KeyHandler {
+	public void init(MagicBox box) {}
+}
+
+class Box {
+	public void set0() {}
+	public void set1() {}
+	public void set2() {}
+	public void set3() {}
+	public void set4() {}
+	public void set5() {}
+	public void set6() {}
+	public void set7() {}
+	public void set8() {}
+	public void set9() {}
+}
+
+association MagicBox_Box {
+  1 MagicBox magicBox;
+  1 Box box;
+}
+
+class Sound {
+	public void Expecto_Patronum() {}
+	public void Protego() {}
+	public void Invito() {}
+	public void Locomotor() {}
+	public void Disaudio() {}
+	public void Capitulatus() {}
+	public void Diffindo() {}
+	public void Silencio() {}
+	public void Stupor() {}
+	public void Levicorpus() {}
+	public void Tadaa() {}
+}
+
+association MagicBox_Sound {
+  1 MagicBox magicBox;
+  1 Sound sound;
+}
+
