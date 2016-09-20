@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:standard="http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML">
+  <uml:Model xmi:id="_bG9IkHzrEeaJaovvvXDVsw" name="hp">
+    <packageImport xmi:id="_bHgiMHzrEeaJaovvvXDVsw">
+      <importedPackage xmi:type="uml:Model" href="pathmap://TXTUML_STDLIB/stdlib.uml#_DE5UMHLCEeWVx4ZuxFlarQ"/>
+    </packageImport>
+    <packageImport xmi:id="_bINs0HzrEeaJaovvvXDVsw">
+      <importedPackage xmi:type="uml:Profile" href="pathmap://UML_PROFILES/Standard.profile.uml#_0"/>
+    </packageImport>
+    <packagedElement xmi:type="uml:Class" xmi:id="_bOvLkHzrEeaJaovvvXDVsw" name="Box">
+      <ownedAttribute xmi:id="_bPgnoHzrEeaJaovvvXDVsw" name="magicBox" type="_bPNssHzrEeaJaovvvXDVsw" association="_bPc9QHzrEeaJaovvvXDVsw">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_bQZYcHzrEeaJaovvvXDVsw" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_bQZYcXzrEeaJaovvvXDVsw" value="1"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="_bOvLkXzrEeaJaovvvXDVsw" name="set0"/>
+      <ownedOperation xmi:id="_bOvLknzrEeaJaovvvXDVsw" name="set1"/>
+      <ownedOperation xmi:id="_bOvLk3zrEeaJaovvvXDVsw" name="set2"/>
+      <ownedOperation xmi:id="_bOvLlHzrEeaJaovvvXDVsw" name="set3"/>
+      <ownedOperation xmi:id="_bOvyoHzrEeaJaovvvXDVsw" name="set4"/>
+      <ownedOperation xmi:id="_bOvyoXzrEeaJaovvvXDVsw" name="set5"/>
+      <ownedOperation xmi:id="_bOvyonzrEeaJaovvvXDVsw" name="set6"/>
+      <ownedOperation xmi:id="_bOvyo3zrEeaJaovvvXDVsw" name="set7"/>
+      <ownedOperation xmi:id="_bOvypHzrEeaJaovvvXDVsw" name="set8"/>
+      <ownedOperation xmi:id="_bOvypXzrEeaJaovvvXDVsw" name="set9"/>
+      <ownedOperation xmi:id="_bOvypnzrEeaJaovvvXDVsw" name="Box"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Signal" xmi:id="_bOxAwHzrEeaJaovvvXDVsw" name="Capitulatus"/>
+    <packagedElement xmi:type="uml:SignalEvent" xmi:id="_bOxn0HzrEeaJaovvvXDVsw" name="Capitulatus" signal="_bOxAwHzrEeaJaovvvXDVsw"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_bOxn0XzrEeaJaovvvXDVsw" name="#Capitulatus_factory">
+      <ownedBehavior xmi:type="uml:Activity" xmi:id="_bOyO4HzrEeaJaovvvXDVsw" name="Capitulatus" specification="_bOxn0nzrEeaJaovvvXDVsw"/>
+      <ownedOperation xmi:id="_bOxn0nzrEeaJaovvvXDVsw" name="Capitulatus" isStatic="true" method="_bOyO4HzrEeaJaovvvXDVsw">
+        <ownedParameter xmi:id="_bOxn1HzrEeaJaovvvXDVsw" name="signal" type="_bOxAwHzrEeaJaovvvXDVsw"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Signal" xmi:id="_bOy18HzrEeaJaovvvXDVsw" name="Diffindo"/>
+    <packagedElement xmi:type="uml:SignalEvent" xmi:id="_bOzdAHzrEeaJaovvvXDVsw" name="Diffindo" signal="_bOy18HzrEeaJaovvvXDVsw"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_bOzdAXzrEeaJaovvvXDVsw" name="#Diffindo_factory">
+      <ownedBehavior xmi:type="uml:Activity" xmi:id="_bOzdBXzrEeaJaovvvXDVsw" name="Diffindo" specification="_bOzdAnzrEeaJaovvvXDVsw"/>
+      <ownedOperation xmi:id="_bOzdAnzrEeaJaovvvXDVsw" name="Diffindo" isStatic="true" method="_bOzdBXzrEeaJaovvvXDVsw">
+        <ownedParameter xmi:id="_bOzdBHzrEeaJaovvvXDVsw" name="signal" type="_bOy18HzrEeaJaovvvXDVsw"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Signal" xmi:id="_bO0EEHzrEeaJaovvvXDVsw" name="Disaudio"/>
+    <packagedElement xmi:type="uml:SignalEvent" xmi:id="_bO0rIHzrEeaJaovvvXDVsw" name="Disaudio" signal="_bO0EEHzrEeaJaovvvXDVsw"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_bO0rIXzrEeaJaovvvXDVsw" name="#Disaudio_factory">
+      <ownedBehavior xmi:type="uml:Activity" xmi:id="_bO0rJXzrEeaJaovvvXDVsw" name="Disaudio" specification="_bO0rInzrEeaJaovvvXDVsw"/>
+      <ownedOperation xmi:id="_bO0rInzrEeaJaovvvXDVsw" name="Disaudio" isStatic="true" method="_bO0rJXzrEeaJaovvvXDVsw">
+        <ownedParameter xmi:id="_bO0rJHzrEeaJaovvvXDVsw" name="signal" type="_bO0EEHzrEeaJaovvvXDVsw"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Signal" xmi:id="_bO1SMHzrEeaJaovvvXDVsw" name="Expecto_Patronum"/>
+    <packagedElement xmi:type="uml:SignalEvent" xmi:id="_bO1SMXzrEeaJaovvvXDVsw" name="Expecto_Patronum" signal="_bO1SMHzrEeaJaovvvXDVsw"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_bO15QHzrEeaJaovvvXDVsw" name="#Expecto_Patronum_factory">
+      <ownedBehavior xmi:type="uml:Activity" xmi:id="_bO15RHzrEeaJaovvvXDVsw" name="Expecto_Patronum" specification="_bO15QXzrEeaJaovvvXDVsw"/>
+      <ownedOperation xmi:id="_bO15QXzrEeaJaovvvXDVsw" name="Expecto_Patronum" isStatic="true" method="_bO15RHzrEeaJaovvvXDVsw">
+        <ownedParameter xmi:id="_bO15Q3zrEeaJaovvvXDVsw" name="signal" type="_bO1SMHzrEeaJaovvvXDVsw"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Signal" xmi:id="_bO2gUHzrEeaJaovvvXDVsw" name="Invito"/>
+    <packagedElement xmi:type="uml:SignalEvent" xmi:id="_bO2gUXzrEeaJaovvvXDVsw" name="Invito" signal="_bO2gUHzrEeaJaovvvXDVsw"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_bO2gUnzrEeaJaovvvXDVsw" name="#Invito_factory">
+      <ownedBehavior xmi:type="uml:Activity" xmi:id="_bO3HYXzrEeaJaovvvXDVsw" name="Invito" specification="_bO2gU3zrEeaJaovvvXDVsw"/>
+      <ownedOperation xmi:id="_bO2gU3zrEeaJaovvvXDVsw" name="Invito" isStatic="true" method="_bO3HYXzrEeaJaovvvXDVsw">
+        <ownedParameter xmi:id="_bO3HYHzrEeaJaovvvXDVsw" name="signal" type="_bO2gUHzrEeaJaovvvXDVsw"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_bO48kHzrEeaJaovvvXDVsw" name="KeyHandler">
+      <ownedOperation xmi:id="_bO48kXzrEeaJaovvvXDVsw" name="init">
+        <ownedParameter xmi:id="_bO6KsHzrEeaJaovvvXDVsw" name="box" type="_bPNssHzrEeaJaovvvXDVsw"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_bO6KsXzrEeaJaovvvXDVsw" name="KeyHandler"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Signal" xmi:id="_bO7Y0HzrEeaJaovvvXDVsw" name="Levicorpus"/>
+    <packagedElement xmi:type="uml:SignalEvent" xmi:id="_bO7Y0XzrEeaJaovvvXDVsw" name="Levicorpus" signal="_bO7Y0HzrEeaJaovvvXDVsw"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_bO7Y0nzrEeaJaovvvXDVsw" name="#Levicorpus_factory">
+      <ownedBehavior xmi:type="uml:Activity" xmi:id="_bO7Y1nzrEeaJaovvvXDVsw" name="Levicorpus" specification="_bO7Y03zrEeaJaovvvXDVsw"/>
+      <ownedOperation xmi:id="_bO7Y03zrEeaJaovvvXDVsw" name="Levicorpus" isStatic="true" method="_bO7Y1nzrEeaJaovvvXDVsw">
+        <ownedParameter xmi:id="_bO7Y1XzrEeaJaovvvXDVsw" name="signal" type="_bO7Y0HzrEeaJaovvvXDVsw"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Signal" xmi:id="_bO8m8HzrEeaJaovvvXDVsw" name="Locomotor"/>
+    <packagedElement xmi:type="uml:SignalEvent" xmi:id="_bO8m8XzrEeaJaovvvXDVsw" name="Locomotor" signal="_bO8m8HzrEeaJaovvvXDVsw"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_bO8m8nzrEeaJaovvvXDVsw" name="#Locomotor_factory">
+      <ownedBehavior xmi:type="uml:Activity" xmi:id="_bO8m9nzrEeaJaovvvXDVsw" name="Locomotor" specification="_bO8m83zrEeaJaovvvXDVsw"/>
+      <ownedOperation xmi:id="_bO8m83zrEeaJaovvvXDVsw" name="Locomotor" isStatic="true" method="_bO8m9nzrEeaJaovvvXDVsw">
+        <ownedParameter xmi:id="_bO8m9XzrEeaJaovvvXDVsw" name="signal" type="_bO8m8HzrEeaJaovvvXDVsw"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_bPNssHzrEeaJaovvvXDVsw" name="MagicBox" classifierBehavior="_bPOTwHzrEeaJaovvvXDVsw">
+      <ownedAttribute xmi:id="_bQamkHzrEeaJaovvvXDVsw" name="box" type="_bOvLkHzrEeaJaovvvXDVsw" association="_bPc9QHzrEeaJaovvvXDVsw">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_bQamkXzrEeaJaovvvXDVsw" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_bQamknzrEeaJaovvvXDVsw" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_bQdp4HzrEeaJaovvvXDVsw" name="sound" type="_bQiiYHzrEeaJaovvvXDVsw" association="_bQdC0HzrEeaJaovvvXDVsw">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_bQeQ8HzrEeaJaovvvXDVsw" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_bQeQ8XzrEeaJaovvvXDVsw" value="1"/>
+      </ownedAttribute>
+      <ownedBehavior xmi:type="uml:StateMachine" xmi:id="_bPOTwHzrEeaJaovvvXDVsw" name="MagicBox">
+        <region xmi:id="_bPOTwXzrEeaJaovvvXDVsw" name="MagicBox">
+          <transition xmi:id="_bPOTw3zrEeaJaovvvXDVsw" name="O" source="_bPOTwnzrEeaJaovvvXDVsw" target="_bPO60HzrEeaJaovvvXDVsw"/>
+          <transition xmi:id="_bPPh5nzrEeaJaovvvXDVsw" name="Capitulatus_PrGo" source="_bPO60HzrEeaJaovvvXDVsw" target="_bPO60nzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPPh53zrEeaJaovvvXDVsw" name="Capitulatus_trigger" event="_bOxn0HzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPPh6HzrEeaJaovvvXDVsw" name="Stupor_PrKi" source="_bPO60HzrEeaJaovvvXDVsw" target="_bPO603zrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPPh6XzrEeaJaovvvXDVsw" name="null_trigger" event="_bQkXkXzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPPh6nzrEeaJaovvvXDVsw" name="Diffindo_GoPr" source="_bPO60nzrEeaJaovvvXDVsw" target="_bPO60HzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPQI8HzrEeaJaovvvXDVsw" name="Diffindo_trigger" event="_bOzdAHzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPQI8XzrEeaJaovvvXDVsw" name="Stupor_GoAb" source="_bPO60nzrEeaJaovvvXDVsw" target="_bPO61HzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPQI8nzrEeaJaovvvXDVsw" name="null_trigger" event="_bQkXkXzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPQI83zrEeaJaovvvXDVsw" name="Levicorpus_KiPr" source="_bPO603zrEeaJaovvvXDVsw" target="_bPO60HzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPQI9HzrEeaJaovvvXDVsw" name="Levicorpus_trigger" event="_bO7Y0XzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPQI9XzrEeaJaovvvXDVsw" name="Invito_KiGy" source="_bPO603zrEeaJaovvvXDVsw" target="_bPO60XzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPQI9nzrEeaJaovvvXDVsw" name="Invito_trigger" event="_bO2gUXzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPQI93zrEeaJaovvvXDVsw" name="Capitulatus_KiAb" source="_bPO603zrEeaJaovvvXDVsw" target="_bPO61HzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPQI-HzrEeaJaovvvXDVsw" name="Capitulatus_trigger" event="_bOxn0HzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPQI-XzrEeaJaovvvXDVsw" name="Locomotor_GyPr" source="_bPO60XzrEeaJaovvvXDVsw" target="_bPO60HzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPQwAHzrEeaJaovvvXDVsw" name="Locomotor_trigger" event="_bO8m8XzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPQwAXzrEeaJaovvvXDVsw" name="Disaudio_GyKi" source="_bPO60XzrEeaJaovvvXDVsw" target="_bPO603zrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPQwAnzrEeaJaovvvXDVsw" name="Disaudio_trigger" event="_bO0rIHzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPQwA3zrEeaJaovvvXDVsw" name="Disaudio_AbKi" source="_bPO61HzrEeaJaovvvXDVsw" target="_bPO603zrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPQwBHzrEeaJaovvvXDVsw" name="Disaudio_trigger" event="_bO0rIHzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPQwBXzrEeaJaovvvXDVsw" name="Stupor_AbGy" source="_bPO61HzrEeaJaovvvXDVsw" target="_bPO60XzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPQwBnzrEeaJaovvvXDVsw" name="null_trigger" event="_bQkXkXzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPQwB3zrEeaJaovvvXDVsw" name="Diffindo_AbGr" source="_bPO61HzrEeaJaovvvXDVsw" target="_bPO61nzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPQwCHzrEeaJaovvvXDVsw" name="Diffindo_trigger" event="_bOzdAHzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPQwCXzrEeaJaovvvXDVsw" name="Protego_AzGy" source="_bPO61XzrEeaJaovvvXDVsw" target="_bPO60XzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPRXEHzrEeaJaovvvXDVsw" name="null_trigger" event="_bQffEXzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPRXEXzrEeaJaovvvXDVsw" name="ExpectoPatronum_AzGr" source="_bPO61XzrEeaJaovvvXDVsw" target="_bPO61nzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPRXEnzrEeaJaovvvXDVsw" name="Expecto_Patronum_trigger" event="_bO1SMXzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPRXE3zrEeaJaovvvXDVsw" name="Silencio_GrGo" source="_bPO61nzrEeaJaovvvXDVsw" target="_bPO60nzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPRXFHzrEeaJaovvvXDVsw" name="null_trigger" event="_bQgtMXzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPRXFXzrEeaJaovvvXDVsw" name="ExpectoPatronum_GrAz" source="_bPO61nzrEeaJaovvvXDVsw" target="_bPO61XzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPRXFnzrEeaJaovvvXDVsw" name="Expecto_Patronum_trigger" event="_bO1SMXzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPRXF3zrEeaJaovvvXDVsw" name="Disaudio_GrRoE" source="_bPO61nzrEeaJaovvvXDVsw" target="_bPO62HzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPRXGHzrEeaJaovvvXDVsw" name="Disaudio_trigger" event="_bO0rIHzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPR-IHzrEeaJaovvvXDVsw" name="Invito_RoEGr" source="_bPO62HzrEeaJaovvvXDVsw" target="_bPO61nzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPR-IXzrEeaJaovvvXDVsw" name="Invito_trigger" event="_bO2gUXzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPR-InzrEeaJaovvvXDVsw" name="Stuport_RoEHa" source="_bPO62HzrEeaJaovvvXDVsw" target="_bPO613zrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPR-I3zrEeaJaovvvXDVsw" name="null_trigger" event="_bQkXkXzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPR-JHzrEeaJaovvvXDVsw" name="Locomotor_RoERo" source="_bPO62HzrEeaJaovvvXDVsw" target="_bPO62nzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPR-JXzrEeaJaovvvXDVsw" name="Locomotor_trigger" event="_bO8m8XzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPR-JnzrEeaJaovvvXDVsw" name="Silencio_RoEAz" source="_bPO62HzrEeaJaovvvXDVsw" target="_bPO61XzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPR-J3zrEeaJaovvvXDVsw" name="null_trigger" event="_bQgtMXzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPR-KHzrEeaJaovvvXDVsw" name="Invito_RoTi" source="_bPO62nzrEeaJaovvvXDVsw" target="_bPO623zrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPSlMHzrEeaJaovvvXDVsw" name="Invito_trigger" event="_bO2gUXzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPSlMXzrEeaJaovvvXDVsw" name="Locomotor_RoRoE" source="_bPO62nzrEeaJaovvvXDVsw" target="_bPO62HzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPSlMnzrEeaJaovvvXDVsw" name="Locomotor_trigger" event="_bO8m8XzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPSlM3zrEeaJaovvvXDVsw" name="Diffindo_RoHa" source="_bPO62nzrEeaJaovvvXDVsw" target="_bPO613zrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPSlNHzrEeaJaovvvXDVsw" name="Diffindo_trigger" event="_bOzdAHzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPSlNXzrEeaJaovvvXDVsw" name="Capitulatus_HaRoE" source="_bPO613zrEeaJaovvvXDVsw" target="_bPO62HzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPTMQHzrEeaJaovvvXDVsw" name="Capitulatus_trigger" event="_bOxn0HzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPTMQXzrEeaJaovvvXDVsw" name="Levicorpus_HaAz" source="_bPO613zrEeaJaovvvXDVsw" target="_bPO61XzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPTMQnzrEeaJaovvvXDVsw" name="Levicorpus_trigger" event="_bO7Y0XzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPTMQ3zrEeaJaovvvXDVsw" name="Capitulatus_PiHa" source="_bPO62XzrEeaJaovvvXDVsw" target="_bPO613zrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPTMRHzrEeaJaovvvXDVsw" name="Capitulatus_trigger" event="_bOxn0HzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPTMRXzrEeaJaovvvXDVsw" name="ExpectoPatronum_PiRo" source="_bPO62XzrEeaJaovvvXDVsw" target="_bPO62nzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPTMRnzrEeaJaovvvXDVsw" name="Expecto_Patronum_trigger" event="_bO1SMXzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPTzUHzrEeaJaovvvXDVsw" name="Disaudio_HaPi" source="_bPPh4HzrEeaJaovvvXDVsw" target="_bPO62XzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPTzUXzrEeaJaovvvXDVsw" name="Disaudio_trigger" event="_bO0rIHzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPTzUnzrEeaJaovvvXDVsw" name="Levicorpus_HaTi" source="_bPPh4HzrEeaJaovvvXDVsw" target="_bPO623zrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPTzU3zrEeaJaovvvXDVsw" name="Levicorpus_trigger" event="_bO7Y0XzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPTzVHzrEeaJaovvvXDVsw" name="Protego_HaTi" source="_bPPh4HzrEeaJaovvvXDVsw" target="_bPPh4nzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPUaYHzrEeaJaovvvXDVsw" name="null_trigger" event="_bQffEXzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPUaYXzrEeaJaovvvXDVsw" name="Locomotor_TiPi" source="_bPPh4nzrEeaJaovvvXDVsw" target="_bPO62XzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPUaYnzrEeaJaovvvXDVsw" name="Locomotor_trigger" event="_bO8m8XzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPUaY3zrEeaJaovvvXDVsw" name="Diffindo_TiTi" source="_bPPh4nzrEeaJaovvvXDVsw" target="_bPO623zrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPUaZHzrEeaJaovvvXDVsw" name="Diffindo_trigger" event="_bOzdAHzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPUaZXzrEeaJaovvvXDVsw" name="ExpectoPatronum_TiKv" source="_bPPh4nzrEeaJaovvvXDVsw" target="_bPPh5HzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPVBcHzrEeaJaovvvXDVsw" name="Expecto_Patronum_trigger" event="_bO1SMXzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPVBcXzrEeaJaovvvXDVsw" name="Levicorpus_TiHa" source="_bPO623zrEeaJaovvvXDVsw" target="_bPPh4HzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPVBcnzrEeaJaovvvXDVsw" name="Levicorpus_trigger" event="_bO7Y0XzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPVBc3zrEeaJaovvvXDVsw" name="Capitulatus_TiRoE" source="_bPO623zrEeaJaovvvXDVsw" target="_bPO62HzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPVBdHzrEeaJaovvvXDVsw" name="Capitulatus_trigger" event="_bOxn0HzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPVogHzrEeaJaovvvXDVsw" name="ExpectoPatronum_TiOd" source="_bPO623zrEeaJaovvvXDVsw" target="_bPPh4XzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPVogXzrEeaJaovvvXDVsw" name="Expecto_Patronum_trigger" event="_bO1SMXzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPVognzrEeaJaovvvXDVsw" name="ExpectoPatronum_OdRo" source="_bPPh4XzrEeaJaovvvXDVsw" target="_bPO62nzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPVog3zrEeaJaovvvXDVsw" name="Expecto_Patronum_trigger" event="_bO1SMXzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPVohHzrEeaJaovvvXDVsw" name="Protego_OdMa" source="_bPPh4XzrEeaJaovvvXDVsw" target="_bPPh43zrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPVohXzrEeaJaovvvXDVsw" name="null_trigger" event="_bQffEXzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPVohnzrEeaJaovvvXDVsw" name="Stupor_MaOd" source="_bPPh43zrEeaJaovvvXDVsw" target="_bPPh4XzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPWPkHzrEeaJaovvvXDVsw" name="null_trigger" event="_bQkXkXzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPWPkXzrEeaJaovvvXDVsw" name="Levicorpus_MaKv" source="_bPPh43zrEeaJaovvvXDVsw" target="_bPPh5HzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPWPknzrEeaJaovvvXDVsw" name="Levicorpus_trigger" event="_bO7Y0XzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPWPk3zrEeaJaovvvXDVsw" name="Silencio_KvCe" source="_bPPh5HzrEeaJaovvvXDVsw" target="_bPPh5XzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPW2oHzrEeaJaovvvXDVsw" name="null_trigger" event="_bQgtMXzrEeaJaovvvXDVsw"/>
+          </transition>
+          <transition xmi:id="_bPW2oXzrEeaJaovvvXDVsw" name="Disaudio_KvPi" source="_bPPh5HzrEeaJaovvvXDVsw" target="_bPO62XzrEeaJaovvvXDVsw">
+            <trigger xmi:id="_bPW2onzrEeaJaovvvXDVsw" name="Disaudio_trigger" event="_bO0rIHzrEeaJaovvvXDVsw"/>
+          </transition>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_bPOTwnzrEeaJaovvvXDVsw" name="Init"/>
+          <subvertex xmi:type="uml:State" xmi:id="_bPO60HzrEeaJaovvvXDVsw" name="Privet_Drive"/>
+          <subvertex xmi:type="uml:State" xmi:id="_bPO60XzrEeaJaovvvXDVsw" name="Gyengelkedo"/>
+          <subvertex xmi:type="uml:State" xmi:id="_bPO60nzrEeaJaovvvXDVsw" name="Godrics_Hollow"/>
+          <subvertex xmi:type="uml:State" xmi:id="_bPO603zrEeaJaovvvXDVsw" name="Kings_Cross"/>
+          <subvertex xmi:type="uml:State" xmi:id="_bPO61HzrEeaJaovvvXDVsw" name="Abszol_ut"/>
+          <subvertex xmi:type="uml:State" xmi:id="_bPO61XzrEeaJaovvvXDVsw" name="Azkaban"/>
+          <subvertex xmi:type="uml:State" xmi:id="_bPO61nzrEeaJaovvvXDVsw" name="Gringotts"/>
+          <subvertex xmi:type="uml:State" xmi:id="_bPO613zrEeaJaovvvXDVsw" name="Hagrid_kunyhoja"/>
+          <subvertex xmi:type="uml:State" xmi:id="_bPO62HzrEeaJaovvvXDVsw" name="Roxfort_express"/>
+          <subvertex xmi:type="uml:State" xmi:id="_bPO62XzrEeaJaovvvXDVsw" name="Piton_szobaja"/>
+          <subvertex xmi:type="uml:State" xmi:id="_bPO62nzrEeaJaovvvXDVsw" name="Roxfort"/>
+          <subvertex xmi:type="uml:State" xmi:id="_bPO623zrEeaJaovvvXDVsw" name="Tiltott_rengeteg"/>
+          <subvertex xmi:type="uml:State" xmi:id="_bPPh4HzrEeaJaovvvXDVsw" name="Harom_sepru"/>
+          <subvertex xmi:type="uml:State" xmi:id="_bPPh4XzrEeaJaovvvXDVsw" name="Odu"/>
+          <subvertex xmi:type="uml:State" xmi:id="_bPPh4nzrEeaJaovvvXDVsw" name="Titkok_kamraja"/>
+          <subvertex xmi:type="uml:State" xmi:id="_bPPh43zrEeaJaovvvXDVsw" name="Magiaugyi_Miniszterium"/>
+          <subvertex xmi:type="uml:State" xmi:id="_bPPh5HzrEeaJaovvvXDVsw" name="Kviddics_palya"/>
+          <subvertex xmi:type="uml:State" xmi:id="_bPPh5XzrEeaJaovvvXDVsw" name="Cel"/>
+        </region>
+      </ownedBehavior>
+      <ownedOperation xmi:id="_bPNssXzrEeaJaovvvXDVsw" name="init">
+        <ownedParameter xmi:id="_bPNssnzrEeaJaovvvXDVsw" name="box" type="_bOvLkHzrEeaJaovvvXDVsw"/>
+        <ownedParameter xmi:id="_bPNss3zrEeaJaovvvXDVsw" name="sound" type="_bQiiYHzrEeaJaovvvXDVsw"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_bPNstHzrEeaJaovvvXDVsw" name="MagicBox"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_bPc9QHzrEeaJaovvvXDVsw" name="MagicBox_Box" memberEnd="_bPgnoHzrEeaJaovvvXDVsw _bQamkHzrEeaJaovvvXDVsw"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_bQdC0HzrEeaJaovvvXDVsw" name="MagicBox_Sound" memberEnd="_bQiiYXzrEeaJaovvvXDVsw _bQdp4HzrEeaJaovvvXDVsw"/>
+    <packagedElement xmi:type="uml:Signal" xmi:id="_bQffEHzrEeaJaovvvXDVsw" name="Protego"/>
+    <packagedElement xmi:type="uml:SignalEvent" xmi:id="_bQffEXzrEeaJaovvvXDVsw" name="Protego" signal="_bQffEHzrEeaJaovvvXDVsw"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_bQffEnzrEeaJaovvvXDVsw" name="#Protego_factory">
+      <ownedBehavior xmi:type="uml:Activity" xmi:id="_bQgGIXzrEeaJaovvvXDVsw" name="Protego" specification="_bQffE3zrEeaJaovvvXDVsw"/>
+      <ownedOperation xmi:id="_bQffE3zrEeaJaovvvXDVsw" name="Protego" isStatic="true" method="_bQgGIXzrEeaJaovvvXDVsw">
+        <ownedParameter xmi:id="_bQgGIHzrEeaJaovvvXDVsw" name="signal" type="_bQffEHzrEeaJaovvvXDVsw"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Signal" xmi:id="_bQgtMHzrEeaJaovvvXDVsw" name="Silencio"/>
+    <packagedElement xmi:type="uml:SignalEvent" xmi:id="_bQgtMXzrEeaJaovvvXDVsw" name="Silencio" signal="_bQgtMHzrEeaJaovvvXDVsw"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_bQgtMnzrEeaJaovvvXDVsw" name="#Silencio_factory">
+      <ownedBehavior xmi:type="uml:Activity" xmi:id="_bQhUQXzrEeaJaovvvXDVsw" name="Silencio" specification="_bQgtM3zrEeaJaovvvXDVsw"/>
+      <ownedOperation xmi:id="_bQgtM3zrEeaJaovvvXDVsw" name="Silencio" isStatic="true" method="_bQhUQXzrEeaJaovvvXDVsw">
+        <ownedParameter xmi:id="_bQhUQHzrEeaJaovvvXDVsw" name="signal" type="_bQgtMHzrEeaJaovvvXDVsw"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_bQiiYHzrEeaJaovvvXDVsw" name="Sound">
+      <ownedAttribute xmi:id="_bQiiYXzrEeaJaovvvXDVsw" name="magicBox" type="_bPNssHzrEeaJaovvvXDVsw" association="_bQdC0HzrEeaJaovvvXDVsw">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_bQiiYnzrEeaJaovvvXDVsw" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_bQiiY3zrEeaJaovvvXDVsw" value="1"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="_bQiiZHzrEeaJaovvvXDVsw" name="Expecto_Patronum"/>
+      <ownedOperation xmi:id="_bQiiZXzrEeaJaovvvXDVsw" name="Protego"/>
+      <ownedOperation xmi:id="_bQiiZnzrEeaJaovvvXDVsw" name="Invito"/>
+      <ownedOperation xmi:id="_bQiiZ3zrEeaJaovvvXDVsw" name="Locomotor"/>
+      <ownedOperation xmi:id="_bQiiaHzrEeaJaovvvXDVsw" name="Disaudio"/>
+      <ownedOperation xmi:id="_bQiiaXzrEeaJaovvvXDVsw" name="Capitulatus"/>
+      <ownedOperation xmi:id="_bQiianzrEeaJaovvvXDVsw" name="Diffindo"/>
+      <ownedOperation xmi:id="_bQiia3zrEeaJaovvvXDVsw" name="Silencio"/>
+      <ownedOperation xmi:id="_bQjJcHzrEeaJaovvvXDVsw" name="Stupor"/>
+      <ownedOperation xmi:id="_bQjJcXzrEeaJaovvvXDVsw" name="Levicorpus"/>
+      <ownedOperation xmi:id="_bQjJcnzrEeaJaovvvXDVsw" name="Tadaa"/>
+      <ownedOperation xmi:id="_bQjJc3zrEeaJaovvvXDVsw" name="Sound"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Signal" xmi:id="_bQkXkHzrEeaJaovvvXDVsw" name="Stupor"/>
+    <packagedElement xmi:type="uml:SignalEvent" xmi:id="_bQkXkXzrEeaJaovvvXDVsw" name="Stupor" signal="_bQkXkHzrEeaJaovvvXDVsw"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_bQkXknzrEeaJaovvvXDVsw" name="#Stupor_factory">
+      <ownedBehavior xmi:type="uml:Activity" xmi:id="_bQk-oXzrEeaJaovvvXDVsw" name="Stupor" specification="_bQkXk3zrEeaJaovvvXDVsw"/>
+      <ownedOperation xmi:id="_bQkXk3zrEeaJaovvvXDVsw" name="Stupor" isStatic="true" method="_bQk-oXzrEeaJaovvvXDVsw">
+        <ownedParameter xmi:id="_bQk-oHzrEeaJaovvvXDVsw" name="signal" type="_bQkXkHzrEeaJaovvvXDVsw"/>
+      </ownedOperation>
+    </packagedElement>
+    <profileApplication xmi:id="_bINs0XzrEeaJaovvvXDVsw">
+      <eAnnotations xmi:id="_bINs0nzrEeaJaovvvXDVsw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard#/"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://UML_PROFILES/Standard.profile.uml#_0"/>
+    </profileApplication>
+  </uml:Model>
+  <standard:Create xmi:id="_bOvyp3zrEeaJaovvvXDVsw" base_BehavioralFeature="_bOvypnzrEeaJaovvvXDVsw"/>
+  <standard:Create xmi:id="_bOxn03zrEeaJaovvvXDVsw" base_BehavioralFeature="_bOxn0nzrEeaJaovvvXDVsw"/>
+  <standard:Create xmi:id="_bOzdA3zrEeaJaovvvXDVsw" base_BehavioralFeature="_bOzdAnzrEeaJaovvvXDVsw"/>
+  <standard:Create xmi:id="_bO0rI3zrEeaJaovvvXDVsw" base_BehavioralFeature="_bO0rInzrEeaJaovvvXDVsw"/>
+  <standard:Create xmi:id="_bO15QnzrEeaJaovvvXDVsw" base_BehavioralFeature="_bO15QXzrEeaJaovvvXDVsw"/>
+  <standard:Create xmi:id="_bO2gVHzrEeaJaovvvXDVsw" base_BehavioralFeature="_bO2gU3zrEeaJaovvvXDVsw"/>
+  <standard:Create xmi:id="_bO6KsnzrEeaJaovvvXDVsw" base_BehavioralFeature="_bO6KsXzrEeaJaovvvXDVsw"/>
+  <standard:Create xmi:id="_bO7Y1HzrEeaJaovvvXDVsw" base_BehavioralFeature="_bO7Y03zrEeaJaovvvXDVsw"/>
+  <standard:Create xmi:id="_bO8m9HzrEeaJaovvvXDVsw" base_BehavioralFeature="_bO8m83zrEeaJaovvvXDVsw"/>
+  <standard:Create xmi:id="_bPNstXzrEeaJaovvvXDVsw" base_BehavioralFeature="_bPNstHzrEeaJaovvvXDVsw"/>
+  <standard:Create xmi:id="_bQffFHzrEeaJaovvvXDVsw" base_BehavioralFeature="_bQffE3zrEeaJaovvvXDVsw"/>
+  <standard:Create xmi:id="_bQgtNHzrEeaJaovvvXDVsw" base_BehavioralFeature="_bQgtM3zrEeaJaovvvXDVsw"/>
+  <standard:Create xmi:id="_bQjJdHzrEeaJaovvvXDVsw" base_BehavioralFeature="_bQjJc3zrEeaJaovvvXDVsw"/>
+  <standard:Create xmi:id="_bQkXlHzrEeaJaovvvXDVsw" base_BehavioralFeature="_bQkXk3zrEeaJaovvvXDVsw"/>
+</xmi:XMI>

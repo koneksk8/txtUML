@@ -5,6 +5,7 @@ import java.util.Enumeration;
 import java.util.Random;
 
 import gnu.io.CommPortIdentifier;
+import gnu.io.RXTXVersion;
 import gnu.io.SerialPort;
 import hp.model.Box;
 
@@ -17,6 +18,7 @@ public class BoxImpl extends Box {
 		CommPortIdentifier portId = null;
 
 		Enumeration<?> portEnum;
+		System.out.println("RXTX version:" + RXTXVersion.getVersion());
 		try {
 			portEnum = CommPortIdentifier.getPortIdentifiers();
 		} catch (UnsatisfiedLinkError e) {
