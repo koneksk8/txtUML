@@ -1,6 +1,7 @@
 package hp;
 
 import java.io.File;
+import java.util.concurrent.CountDownLatch;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -63,6 +64,8 @@ public class SoundProducer extends Sound {
 		playSound("levicorpus.wav");
 	}
 
+	CountDownLatch soundFinished = new CountDownLatch(1);
+	
 	private void playSound(String fileName) {
 		try {
 			AudioInputStream stream = AudioSystem.getAudioInputStream(new File("resources/high/" + fileName));
@@ -74,10 +77,13 @@ public class SoundProducer extends Sound {
 				public void update(LineEvent event) {
 					if (event.getType() == LineEvent.Type.STOP) {
 						clip.close();
+						soundFinished.countDown();
 					}
 				}
 			});
 			clip.start();
+			soundFinished.await();
+			soundFinished = new CountDownLatch(1);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
