@@ -205,6 +205,21 @@ RAlfSendSignalExpression returns xbase::XExpression :
 	'send' signal=XExpression 'to' target=XExpression
 ;
 
+XLogExpression returns xbase::XExpression :
+	{XLogExpression}
+	'log' message=XExpression
+;
+
+XStartExpression returns xbase::XExpression :
+	{XStartExpression}
+	'start' object=XExpression
+;
+
+XLinkExpression returns xbase::XExpression :
+	{XLinkExpression}
+	'link' leftObj=XExpression ',' rightObj=XExpression 'via' association=[TUAssociation|QualifiedName]
+;
+
 RAlfDeleteObjectExpression returns xbase::XExpression :
 	{RAlfDeleteObjectExpression}
 	'delete' object=XExpression
@@ -243,6 +258,9 @@ XRAlfStatementSemicolonNeeded returns xbase::XExpression
 	| XExpression
 	| RAlfSendSignalExpression
 	| RAlfDeleteObjectExpression
+	| XLogExpression
+	| XStartExpression
+	| XLinkExpression
 ;
 
 XParenthesizedRAlfExpression returns xbase::XExpression :

@@ -18,6 +18,9 @@ import hu.elte.txtuml.xtxtuml.xtxtUML.TUSignal
 import hu.elte.txtuml.xtxtuml.xtxtUML.TUState
 import hu.elte.txtuml.xtxtuml.xtxtUML.TUStateType
 import hu.elte.txtuml.xtxtuml.xtxtUML.TUTransition
+import hu.elte.txtuml.xtxtuml.xtxtUML.XLinkExpression
+import hu.elte.txtuml.xtxtuml.xtxtUML.XLogExpression
+import hu.elte.txtuml.xtxtuml.xtxtUML.XStartExpression
 import java.util.HashSet
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.common.types.JvmOperation
@@ -231,7 +234,10 @@ class XtxtUMLExpressionValidator extends XtxtUMLTypeValidator {
 		val container = expr.eContainer;
 		return switch (container) {
 			RAlfSendSignalExpression,
-			RAlfDeleteObjectExpression: true
+			RAlfDeleteObjectExpression,
+			XLogExpression,
+			XStartExpression,
+			XLinkExpression: true
 			XBlockExpression: false
 			default: super.isValueExpectedRecursive(expr)
 		}

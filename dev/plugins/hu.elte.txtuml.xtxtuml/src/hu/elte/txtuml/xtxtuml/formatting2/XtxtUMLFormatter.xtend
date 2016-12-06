@@ -31,6 +31,9 @@ import hu.elte.txtuml.xtxtuml.xtxtUML.TUTransitionGuard
 import hu.elte.txtuml.xtxtuml.xtxtUML.TUTransitionPort
 import hu.elte.txtuml.xtxtuml.xtxtUML.TUTransitionTrigger
 import hu.elte.txtuml.xtxtuml.xtxtUML.TUTransitionVertex
+import hu.elte.txtuml.xtxtuml.xtxtUML.XLinkExpression
+import hu.elte.txtuml.xtxtuml.xtxtUML.XLogExpression
+import hu.elte.txtuml.xtxtuml.xtxtUML.XStartExpression
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
@@ -45,6 +48,21 @@ import org.eclipse.xtext.xbase.formatting2.XbaseFormatter
 import static hu.elte.txtuml.xtxtuml.xtxtUML.XtxtUMLPackage.Literals.*
 
 class XtxtUMLFormatter extends XbaseFormatter {
+
+	def dispatch void format(XStartExpression it, extension IFormattableDocument document) {
+		object.prepend[oneSpace];
+		format(object, document);
+	}
+
+	def dispatch void format(XLogExpression it, extension IFormattableDocument document) {
+		message.prepend[oneSpace];
+		format(message, document);
+	}
+
+	def dispatch void format(XLinkExpression it, extension IFormattableDocument document) {
+		format(leftObj, document);
+		format(rightObj, document);
+	}
 
 	def dispatch void format(TUModelDeclaration it, extension IFormattableDocument document) {
 		regionFor.keyword('model-package').prepend[noSpace].append[oneSpace];

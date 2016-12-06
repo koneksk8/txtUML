@@ -18,6 +18,9 @@ import hu.elte.txtuml.xtxtuml.xtxtUML.TUStateType
 import hu.elte.txtuml.xtxtuml.xtxtUML.TUTransition
 import hu.elte.txtuml.xtxtuml.xtxtUML.TUTransitionTrigger
 import hu.elte.txtuml.xtxtuml.xtxtUML.TUTransitionVertex
+import hu.elte.txtuml.xtxtuml.xtxtUML.XLinkExpression
+import hu.elte.txtuml.xtxtuml.xtxtUML.XLogExpression
+import hu.elte.txtuml.xtxtuml.xtxtUML.XStartExpression
 import java.util.ArrayList
 import java.util.HashSet
 import org.eclipse.emf.common.util.EList
@@ -202,6 +205,22 @@ class XtxtUMLTypeComputer extends XbaseWithAnnotationsTypeComputer {
 	def dispatch computeTypes(RAlfSendSignalExpression sendExpr, ITypeComputationState state) {
 		state.computeTypes(sendExpr.signal);
 		state.computeTypes(sendExpr.target);
+		state.acceptActualType(state.getPrimitiveVoid);
+	}
+
+	def dispatch computeTypes(XLogExpression logExpr, ITypeComputationState state) {
+		state.computeTypes(logExpr.message);
+		state.acceptActualType(state.getPrimitiveVoid);
+	}
+
+	def dispatch computeTypes(XStartExpression startExpr, ITypeComputationState state) {
+		state.computeTypes(startExpr.object);
+		state.acceptActualType(state.getPrimitiveVoid);
+	}
+
+	def dispatch computeTypes(XLinkExpression linkExpr, ITypeComputationState state) {
+		state.computeTypes(linkExpr.leftObj);
+		state.computeTypes(linkExpr.rightObj);
 		state.acceptActualType(state.getPrimitiveVoid);
 	}
 

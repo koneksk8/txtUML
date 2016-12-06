@@ -8,6 +8,9 @@ import hu.elte.txtuml.xtxtuml.xtxtUML.RAlfSendSignalExpression
 import hu.elte.txtuml.xtxtuml.xtxtUML.RAlfSignalAccessExpression
 import hu.elte.txtuml.xtxtuml.xtxtUML.TUAssociationEnd
 import hu.elte.txtuml.xtxtuml.xtxtUML.TUClassPropertyAccessExpression
+import hu.elte.txtuml.xtxtuml.xtxtUML.XLinkExpression
+import hu.elte.txtuml.xtxtuml.xtxtUML.XLogExpression
+import hu.elte.txtuml.xtxtuml.xtxtUML.XStartExpression
 import org.eclipse.xtext.common.types.JvmType
 import org.eclipse.xtext.xbase.XExpression
 import org.eclipse.xtext.xbase.compiler.XbaseCompiler
@@ -23,11 +26,51 @@ class XtxtUMLCompiler extends XbaseCompiler {
 			TUClassPropertyAccessExpression,
 			RAlfDeleteObjectExpression,
 			RAlfSendSignalExpression,
-			RAlfSignalAccessExpression:
+			RAlfSignalAccessExpression,
+			XStartExpression,
+			XLogExpression,
+			XLinkExpression:
 				obj.toJavaStatement(builder)
 			default:
 				super.doInternalToJavaStatement(obj, builder, isReferenced)
 		}
+	}
+
+	def dispatch toJavaStatement(XStartExpression startExpr, ITreeAppendable it) {
+		newLine;
+		append(Action);
+		append(".start(")
+		startExpr.object.internalToJavaExpression(it);
+		append(");");
+	}
+
+	def dispatch toJavaStatement(XLogExpression logExpr, ITreeAppendable it) {
+		newLine;
+		append(Action);
+		append(".log(")
+		logExpr.message.internalToJavaExpression(it);
+		append(");");
+	}
+
+	def dispatch toJavaStatement(XLinkExpression linkExpr, ITreeAppendable it) {
+		var leftEndIndex = if (linkExpr.leftObj.lightweightType.type.qualifiedName.endsWith(
+				linkExpr.association.ends.head.endClass.name)) {
+				0
+			} else {
+				1
+			}
+
+		newLine;
+		append(Action);
+		append(".link(");
+		append(linkExpr.association.ends.get(leftEndIndex).getPrimaryJvmElement as JvmType);
+		append(".class, ");
+		linkExpr.leftObj.internalToJavaExpression(it);
+		append(", ");
+		append(linkExpr.association.ends.get(1 - leftEndIndex).getPrimaryJvmElement as JvmType);
+		append(".class, ");
+		linkExpr.rightObj.internalToJavaExpression(it);
+		append(");");
 	}
 
 	def dispatch toJavaStatement(TUClassPropertyAccessExpression accessExpr, ITreeAppendable it) {
