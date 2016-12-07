@@ -88,7 +88,7 @@ class XtxtUMLJvmModelInferrer extends AbstractModelInferrer {
 
 				static = true
 				body = '''
-					hu.elte.txtuml.api.model.execution.ModelExecutor.create().setTraceLogging(false).start(«exec.name»::init);
+					hu.elte.txtuml.api.model.execution.ModelExecutor.create().setTraceLogging(true).start(«exec.name»::init);
 				'''
 			]
 		]

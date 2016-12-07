@@ -10,6 +10,7 @@ import hu.elte.txtuml.xtxtuml.xtxtUML.TUReception
 import hu.elte.txtuml.xtxtuml.xtxtUML.TUTransitionPort
 import hu.elte.txtuml.xtxtuml.xtxtUML.TUTransitionTrigger
 import hu.elte.txtuml.xtxtuml.xtxtUML.TUTransitionVertex
+import hu.elte.txtuml.xtxtuml.xtxtUML.XLinkExpression
 import hu.elte.txtuml.xtxtuml.xtxtUML.XtxtUMLPackage
 import java.util.ArrayList
 import org.eclipse.emf.common.util.TreeIterator
@@ -69,6 +70,9 @@ class XtxtUMLImportedTypesCollector extends ImportedTypesCollector {
 				TUTransitionPort:
 					references.add(next.port?.getPrimaryJvmElement as JvmType ->
 						next.getFullTextRegion(XtxtUMLPackage::eINSTANCE.TUTransitionPort_Port, 0))
+				XLinkExpression:
+					references.add(next.association?.getPrimaryJvmElement as JvmType ->
+						next.getFullTextRegion(XtxtUMLPackage::eINSTANCE.XLinkExpression_Association, 0))
 			}
 
 			for (ref : references) {
