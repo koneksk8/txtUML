@@ -1,6 +1,6 @@
 package hu.elte.txtuml.export.cpp.templates;
 
-class GenerationNames {
+public class GenerationNames {
 	public static final String EventHeaderName = "event";
 	public static final String EventBaseName = "EventBase";
 	public static final String EventBaseRefName = EventBaseName + "CRef";
@@ -9,12 +9,17 @@ class GenerationNames {
 	public static final String HeaderExtension = "hpp";
 	public static final String SourceExtension = "cpp";
 	public static final String ClassType = "struct";
+	public static final String DataType = "struct";
+	public static final String EnumName = "enum";
 
 	// NDEBUG is the only thing guaranteed, DEBUG and _DEBUG is non-standard
 	public static final String NoDebugSymbol = "NDEBUG";
 	public static final String StandardIOinclude = "#include <iostream>\n";
 
 	public static final String StandardLibaryFunctionsHeaderName = "standard_functions";
+	
+	//Modifies
+	public static final String StaticModifier = "static";
 
 	public static final String NullPtr = "nullptr";
 	public static final String Self = "this";
@@ -31,27 +36,21 @@ class GenerationNames {
 	public static final String EventClassTypeId = "_EC";
 	public static final String EventEnumTypeId = "_EE";
 	public static final String StateEnumTypeId = "_ST";
-	public static final String EntryName = "Entry";
-	public static final String ExitName = "Exit";
+	public static final String EntryName = "entry";
+	public static final String ExitName = "exit";
 	public static final String EventParamName = "e";
 	public static final String EventFParamName = formatIncomingParamName(EventParamName);
 	public static final String StateParamName = "s_";
 	public static final String TransitionTableName = "_mM";
 	public static final String setStateFuncName = "setState";
 	public static final String CurrentStateName = "_cS";
-	public static final String DefaultInvalidState = "-1";
-	public static final String DefaultStateInitialization = CurrentStateName + "(" + DefaultInvalidState + ")";
 	public static final String FunctionPtrTypeName = "ActionFuncType";
 	public static final String GuardFuncTypeName = "GuardFuncType";
 	public static final String GuardActionName = "GuardAction";
 	public static final String EventStateTypeName = "EventState";
 	public static final String ProcessEventFName = "process_event";
-	public static final String ProcessEventDeclShared = "bool " + ProcessEventFName + "(" + EventBaseRefName + " "
-			+ EventFParamName + ")";
 	public static final String UnParametrizadProcessEvent = "bool " + ProcessEventFName + "(" + EventBaseRefName + ")";
 	public static final String ProcessEventDecl = UnParametrizadProcessEvent + ";\n";
-	public static final String TransitionTable = "std::unordered_multimap<" + EventStateTypeName + "," + GuardActionName
-			+ "> " + TransitionTableName + ";\n";
 	public static final String SetStateDecl = NoReturn + " " + setStateFuncName + "(int "
 			+ GenerationNames.StateParamName + ");\n";
 	public static final String SetInitialStateName = "setInitialState";
@@ -59,7 +58,6 @@ class GenerationNames {
 	public static final String StatemachineBaseName = "StateMachineBase";
 	public static final String StatemachineBaseHeaderName = "statemachinebase";
 	public static final String DefaultGuardName = "defaultGuard";
-	public static final String DummyProcessEventDef = UnParametrizadProcessEvent + "{return false;}\n";
 	public static final String StartSmMethodName = "startSM";
 
 	// hierarchical state machine
@@ -76,7 +74,6 @@ class GenerationNames {
 	public static final String ParentSmName = "pSm";
 	public static final String ParentSmMemberName = "_" + ParentSmName;
 
-	public static final String Unknown = "?";
 	public static final String AssocMultiplicityDataStruct = "AssociationEnd";
 	public static final String AssociationClassName = "Association";
 	public static final String AssocationHeaderName = "association";
@@ -87,7 +84,6 @@ class GenerationNames {
 	public static final String PoolIdSetter = "setPoolId";
 	public static final String InitialEventName = "InitSignal";
 	public static final String SendSignal = "send";
-	public static final String MultiplicityEnum = "Multiplicity";
 	public static final String AssigmentOperator = "=";
 	public static final String AddAssocToAssocationFunctionName = "addAssoc";
 	public static final String RemoveAssocToAssocationFunctionName = "removeAssoc";
@@ -114,6 +110,13 @@ class GenerationNames {
 
 	public static final String DefaultParentSmInicialization = GenerationNames.ParentSmMemberName + "("
 			+ GenerationNames.ParentSmPointerName + ")";
+
+	public static final String InitFunctionName = "init";
+	
+
+	public static String initFunctionName(String className) {
+		return InitFunctionName + className;
+	}
 
 	public static String friendClassDecl(String className) {
 		return "friend " + GenerationNames.ClassType + " " + className + ";\n";
@@ -144,7 +147,7 @@ class GenerationNames {
 
 	private static final String simpleProcessEventDefBody() {
 		return "{\n" + "bool handled=false;\n" + "auto range = " + TransitionTableName + ".equal_range(EventState("
-				+ EventFParamName + ".t," + CurrentStateName + "));\n" + "if(range.first!=" + TransitionTableName
+				+ EventFParamName + ".t," + CurrentStateName + "," + EventFParamName +  ".p));\n" + "if(range.first!=" + TransitionTableName
 				+ ".end())\n" + "{\n" + "for(auto it=range.first;it!=range.second;++it)\n" + "{\n"
 				+ "if((it->second).first(*this," + EventFParamName + "))//Guard call\n" + "{\n" + ExitName + "();\n"
 				+ "(it->second).second(*this," + EventFParamName + ");//Action Call\n" + "handled=true;\n" + "break;\n"
@@ -199,7 +202,7 @@ class GenerationNames {
 	}
 
 	public static String sharedPtrType(String typeName) {
-		
+
 		return SmartPtr + "<" + typeName + ">";
 	}
 }

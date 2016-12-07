@@ -1,45 +1,40 @@
-#include "statemachineI.hpp"
+#include "istatemachine.hpp"
 #include "threadpool.hpp"
 #include "runtime.hpp"
 
 #include <iostream>
 
 
- StateMachineI::StateMachineI(std::shared_ptr<MessageQueueType> messageQueue_)
+ IStateMachine::IStateMachine(std::shared_ptr<MessageQueueType> messageQueue_)
          :_messageQueue(messageQueue_), _pool(nullptr), _inPool(false), _started(false), _initialized(false){}
 
- 
-void StateMachineI::runSM()
-{
-    for(;;)
-    {
-      processEventVirtual();
-    }
-}
 
-void StateMachineI::init()
+void IStateMachine::init()
 {
 	_initialized = true;
 	processInitTranstion();
 }
 
-void StateMachineI::send(EventPtr e_)
+void IStateMachine::send(EventPtr e_)
 {
   (*message_counter)++;
   _messageQueue->push_back(e_);
-  if(_pool != nullptr)
+  if (_started)
   {
-    handlePool();
-  }
-  else
-  {
-      RuntimeI<SingleThreadRT>::createRuntime()->enqueObject(this);
+	if(_pool != nullptr)
+  	{
+    		handlePool();
+  	}
+	else
+	{
+	    	RuntimeI<SingleThreadRT>::createRuntime()->enqueObject(this);
+	}
   }
   
 
 }
 
-void StateMachineI::handlePool()
+void IStateMachine::handlePool()
 {
   std::unique_lock<std::mutex> mlock(_mutex);
   if(!_inPool)
@@ -49,13 +44,13 @@ void StateMachineI::handlePool()
   }
 }
 
-void StateMachineI::setPooled(bool value_=true)
+void IStateMachine::setPooled(bool value_=true)
 {
 	  _inPool=value_;
 	  _cond.notify_one();
 }
 
-StateMachineI::~StateMachineI()
+IStateMachine::~IStateMachine()
 {
 	std::unique_lock<std::mutex> mlock(_mutex);
 	while(_inPool)
