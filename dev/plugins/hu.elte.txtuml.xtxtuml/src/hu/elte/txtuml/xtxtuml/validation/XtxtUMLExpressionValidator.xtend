@@ -21,6 +21,7 @@ import hu.elte.txtuml.xtxtuml.xtxtUML.TUTransition
 import hu.elte.txtuml.xtxtuml.xtxtUML.XLinkExpression
 import hu.elte.txtuml.xtxtuml.xtxtUML.XLogExpression
 import hu.elte.txtuml.xtxtuml.xtxtUML.XStartExpression
+import hu.elte.txtuml.xtxtuml.xtxtUML.XUnlinkExpression
 import java.util.HashSet
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.common.types.JvmOperation
@@ -237,7 +238,8 @@ class XtxtUMLExpressionValidator extends XtxtUMLTypeValidator {
 			RAlfDeleteObjectExpression,
 			XLogExpression,
 			XStartExpression,
-			XLinkExpression: true
+			XLinkExpression,
+			XUnlinkExpression: true
 			XBlockExpression: false
 			default: super.isValueExpectedRecursive(expr)
 		}

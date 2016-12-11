@@ -7,6 +7,7 @@ import hu.elte.txtuml.xtxtuml.xtxtUML.TUClassPropertyAccessExpression
 import hu.elte.txtuml.xtxtuml.xtxtUML.XLinkExpression
 import hu.elte.txtuml.xtxtuml.xtxtUML.XLogExpression
 import hu.elte.txtuml.xtxtuml.xtxtUML.XStartExpression
+import hu.elte.txtuml.xtxtuml.xtxtUML.XUnlinkExpression
 import org.eclipse.xtext.xbase.XExpression
 import org.eclipse.xtext.xbase.util.XExpressionHelper
 
@@ -18,7 +19,8 @@ class XtxtUMLExpressionHelper extends XExpressionHelper {
 			RAlfSendSignalExpression,
 			XStartExpression,
 			XLogExpression,
-			XLinkExpression:
+			XLinkExpression,
+			XUnlinkExpression:
 				true
 			RAlfSignalAccessExpression,
 			TUClassPropertyAccessExpression:

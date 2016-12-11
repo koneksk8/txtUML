@@ -21,6 +21,7 @@ import hu.elte.txtuml.xtxtuml.xtxtUML.TUTransitionVertex
 import hu.elte.txtuml.xtxtuml.xtxtUML.XLinkExpression
 import hu.elte.txtuml.xtxtuml.xtxtUML.XLogExpression
 import hu.elte.txtuml.xtxtuml.xtxtUML.XStartExpression
+import hu.elte.txtuml.xtxtuml.xtxtUML.XUnlinkExpression
 import java.util.ArrayList
 import java.util.HashSet
 import org.eclipse.emf.common.util.EList
@@ -221,6 +222,12 @@ class XtxtUMLTypeComputer extends XbaseWithAnnotationsTypeComputer {
 	def dispatch computeTypes(XLinkExpression linkExpr, ITypeComputationState state) {
 		state.computeTypes(linkExpr.leftObj);
 		state.computeTypes(linkExpr.rightObj);
+		state.acceptActualType(state.getPrimitiveVoid);
+	}
+
+	def dispatch computeTypes(XUnlinkExpression unlinkExpr, ITypeComputationState state) {
+		state.computeTypes(unlinkExpr.leftObj);
+		state.computeTypes(unlinkExpr.rightObj);
 		state.acceptActualType(state.getPrimitiveVoid);
 	}
 

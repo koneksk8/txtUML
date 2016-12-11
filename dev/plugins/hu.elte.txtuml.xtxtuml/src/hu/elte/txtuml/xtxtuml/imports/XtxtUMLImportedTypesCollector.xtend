@@ -11,6 +11,7 @@ import hu.elte.txtuml.xtxtuml.xtxtUML.TUTransitionPort
 import hu.elte.txtuml.xtxtuml.xtxtUML.TUTransitionTrigger
 import hu.elte.txtuml.xtxtuml.xtxtUML.TUTransitionVertex
 import hu.elte.txtuml.xtxtuml.xtxtUML.XLinkExpression
+import hu.elte.txtuml.xtxtuml.xtxtUML.XUnlinkExpression
 import hu.elte.txtuml.xtxtuml.xtxtUML.XtxtUMLPackage
 import java.util.ArrayList
 import org.eclipse.emf.common.util.TreeIterator
@@ -73,6 +74,9 @@ class XtxtUMLImportedTypesCollector extends ImportedTypesCollector {
 				XLinkExpression:
 					references.add(next.association?.getPrimaryJvmElement as JvmType ->
 						next.getFullTextRegion(XtxtUMLPackage::eINSTANCE.XLinkExpression_Association, 0))
+				XUnlinkExpression:
+					references.add(next.association?.getPrimaryJvmElement as JvmType ->
+						next.getFullTextRegion(XtxtUMLPackage::eINSTANCE.XUnlinkExpression_Association, 0))
 			}
 
 			for (ref : references) {

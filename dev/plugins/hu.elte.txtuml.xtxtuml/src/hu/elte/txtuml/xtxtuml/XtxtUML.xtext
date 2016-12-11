@@ -220,6 +220,11 @@ XLinkExpression returns xbase::XExpression :
 	'link' leftObj=XExpression ',' rightObj=XExpression 'via' association=[TUAssociation|QualifiedName]
 ;
 
+XUnlinkExpression returns xbase::XExpression :
+	{XUnlinkExpression}
+	'unlink' leftObj=XExpression ',' rightObj=XExpression 'via' association=[TUAssociation|QualifiedName]
+;
+
 RAlfDeleteObjectExpression returns xbase::XExpression :
 	{RAlfDeleteObjectExpression}
 	'delete' object=XExpression
@@ -261,6 +266,7 @@ XRAlfStatementSemicolonNeeded returns xbase::XExpression
 	| XLogExpression
 	| XStartExpression
 	| XLinkExpression
+	| XUnlinkExpression
 ;
 
 XParenthesizedRAlfExpression returns xbase::XExpression :

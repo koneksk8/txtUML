@@ -34,6 +34,7 @@ import hu.elte.txtuml.xtxtuml.xtxtUML.TUTransitionVertex
 import hu.elte.txtuml.xtxtuml.xtxtUML.XLinkExpression
 import hu.elte.txtuml.xtxtuml.xtxtUML.XLogExpression
 import hu.elte.txtuml.xtxtuml.xtxtUML.XStartExpression
+import hu.elte.txtuml.xtxtuml.xtxtUML.XUnlinkExpression
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
@@ -60,6 +61,11 @@ class XtxtUMLFormatter extends XbaseFormatter {
 	}
 
 	def dispatch void format(XLinkExpression it, extension IFormattableDocument document) {
+		format(leftObj, document);
+		format(rightObj, document);
+	}
+
+	def dispatch void format(XUnlinkExpression it, extension IFormattableDocument document) {
 		format(leftObj, document);
 		format(rightObj, document);
 	}

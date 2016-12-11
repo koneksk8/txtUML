@@ -11,6 +11,7 @@ import hu.elte.txtuml.xtxtuml.xtxtUML.TUClassPropertyAccessExpression
 import hu.elte.txtuml.xtxtuml.xtxtUML.XLinkExpression
 import hu.elte.txtuml.xtxtuml.xtxtUML.XLogExpression
 import hu.elte.txtuml.xtxtuml.xtxtUML.XStartExpression
+import hu.elte.txtuml.xtxtuml.xtxtUML.XUnlinkExpression
 import org.eclipse.xtext.common.types.JvmType
 import org.eclipse.xtext.xbase.XExpression
 import org.eclipse.xtext.xbase.compiler.XbaseCompiler
@@ -29,7 +30,8 @@ class XtxtUMLCompiler extends XbaseCompiler {
 			RAlfSignalAccessExpression,
 			XStartExpression,
 			XLogExpression,
-			XLinkExpression:
+			XLinkExpression,
+			XUnlinkExpression:
 				obj.toJavaStatement(builder)
 			default:
 				super.doInternalToJavaStatement(obj, builder, isReferenced)
@@ -70,6 +72,27 @@ class XtxtUMLCompiler extends XbaseCompiler {
 		append(linkExpr.association.ends.get(1 - leftEndIndex).getPrimaryJvmElement as JvmType);
 		append(".class, ");
 		linkExpr.rightObj.internalToJavaExpression(it);
+		append(");");
+	}
+
+	def dispatch toJavaStatement(XUnlinkExpression unlinkExpr, ITreeAppendable it) {
+		var leftEndIndex = if (unlinkExpr.leftObj.lightweightType.type.qualifiedName.endsWith(
+				unlinkExpr.association.ends.head.endClass.name)) {
+				0
+			} else {
+				1
+			}
+
+		newLine;
+		append(Action);
+		append(".unlink(");
+		append(unlinkExpr.association.ends.get(leftEndIndex).getPrimaryJvmElement as JvmType);
+		append(".class, ");
+		unlinkExpr.leftObj.internalToJavaExpression(it);
+		append(", ");
+		append(unlinkExpr.association.ends.get(1 - leftEndIndex).getPrimaryJvmElement as JvmType);
+		append(".class, ");
+		unlinkExpr.rightObj.internalToJavaExpression(it);
 		append(");");
 	}
 
